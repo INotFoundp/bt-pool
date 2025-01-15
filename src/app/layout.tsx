@@ -1,5 +1,6 @@
 import "./globals.css";
 import Header from "@/components/theme/Header";
+import Footer from "@/components/theme/Footer";
 
 
 export default function RootLayout({
@@ -18,6 +19,7 @@ export default function RootLayout({
       <main className={"w-full bg-[#F5F6FA] "}>
           {children}
       </main>
+      <Footer />
       </body>
     </html>
   );
