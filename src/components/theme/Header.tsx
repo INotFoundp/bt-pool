@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "@/components/ui/Logo";
+import Logo from "@/components/theme/Logo";
 import Link from "next/link";
 import prisma from "@/backend/module/Prisma";
 import {cookies} from "next/headers";
