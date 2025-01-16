@@ -1,5 +1,7 @@
 import Logo from "@/components/theme/Logo";
+// @ts-ignore
 import {FaFacebook, FaTelegramPlane} from "react-icons/fa";
+// @ts-ignore
 import {BsTwitterX} from "react-icons/bs";
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion";
 

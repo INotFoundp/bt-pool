@@ -1,0 +1,13 @@
+{
+  "app": "test-btpool",
+  "port": 3000,
+  "build": {
+    "location": "iran"
+  },
+  "disks": [
+    {
+      "name": "prisma",
+      "mountTo": "prisma/migrations"
+    }
+  ]
+}

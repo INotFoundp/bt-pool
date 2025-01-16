@@ -1,6 +1,7 @@
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs"
 import {Card} from "@/components/ui/card";
 import Image from "next/image";
+// @ts-ignore
 import {PiTimerLight} from "react-icons/pi";
 import {
   Pagination,
@@ -15,7 +16,7 @@ const Page = () => {
   return (
     <div className={'container mx-auto text-2xl pt-20'}>
       <Tabs defaultValue={'all'} className={'w-full text-2xl pb-5'}>
-        <TabsList className={'text-2xl shadow-2xl mb-5 rounded-md border border-gray-300 p-6 w-full justify-start'}>
+        <TabsList className={'text-2xl overflow-auto shadow-2xl mb-5 rounded-md border border-gray-300 p-6 w-full justify-start'}>
           <TabsTrigger value="all" className={'text-[17px]'}>All</TabsTrigger>
           <TabsTrigger className={'text-[17px]'} value="update">Company Update</TabsTrigger>
           <TabsTrigger className={'text-[17px]'} value="popular">Popular</TabsTrigger>

@@ -12,9 +12,7 @@ export default function RootLayout({
 
     return (
     <html lang="en">
-      <body
-          className={` antialiased`}
-      >
+      <body className={`antialiased`}>
       <Header/>
       <main className={"w-full bg-[#F5F6FA] "}>
           {children}

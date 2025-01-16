@@ -1,14 +1,16 @@
-import React from "react";
+"use client"
+
+import React, {useEffect, useState} from "react";
 import Logo from "@/components/theme/Logo";
 import Link from "next/link";
+import {AiOutlineClose, AiOutlineMenu} from "react-icons/ai";
+import {usePathname} from "next/navigation";
 import prisma from "@/backend/module/Prisma";
-import {cookies} from "next/headers";
-import * as jwt from "jsonwebtoken"
 
-export default async function Header() {
+export default  function Header() {
 
-
-
+    const [showSideBard, setShowSideBard] = useState(false)
+    const pathname = usePathname()
     //
     // const cookie = (await cookies())
     //
@@ -21,36 +23,71 @@ export default async function Header() {
     //
     //
 
-
     const navLinks = [
         {label: "Pool", href: "pool"},
         {label: "Assets", href: "assets"},
         {label: "Blog", href: "blog"},
     ]
 
+
+    useEffect(() => {
+        setShowSideBard(false)
+    }, [pathname]);
+
     return (
-        <header className={"w-full fixed z-40 bg-opacity-55 top-0 p-2 bg-black "}>
+        <header className={"w-full fixed z-40 bg-opacity-100 md:bg-opacity-55 top-0 py-2 pb-3 bg-black "}>
+            {showSideBard && (
+                <div className={"w-full h-screen bg-black fixed z-40"}>
+                    <div className={"px-3 flex flex-col items-end gap-5 justify-end"}>
+
+                        <div className={"flex flex-row-reverse justify-between w-full"}>
+                            <button onClick={() => {
+                                setShowSideBard(false)
+                            }} type="button"
+                                    className="inline-flex items-center  w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden border focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                                    aria-controls="navbar-default" aria-expanded="false">
+                                <AiOutlineClose size={22} className={"text-white"}/>
+                            </button>
+
+                            <Logo/>
+                        </div>
 
 
-            <div className={"container flex items-center gap-3 mx-auto"}>
+                        <div className={"text-black z-50 w-full h-full"}>
+                            {navLinks.map(item => {
+                                let {href, label} = item;
+                                return (
+                                    <div key={href} className={"text-white border-b last:border-0 w-full p-3"}>
+                                        <Link href={`/${href}`}>
+                                            {href}
+                                        </Link>
+                                    </div>
+                                )
+                            })}
+                        </div>
+
+                    </div>
+
+                </div>
+            )}
+
+
+            <div className={"container px-3 flex justify-between items-center gap-3 mx-auto"}>
                 <Logo/>
 
                 <div>
                     <nav className=" border-gray-200 ">
-                        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto ">
-                            <button data-collapse-toggle="navbar-default" type="button"
-                                    className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                                    aria-controls="navbar-default" aria-expanded="false">
-                                <span className="sr-only">Open main menu</span>
-                                <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                     fill="none"
-                                     viewBox="0 0 17 14">
-                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"
-                                          strokeWidth="2" d="M1 1h15M1 7h15M1 13h15"/>
-                                </svg>
+                        <div className=" flex flex-wrap items-center justify-between mx-auto ">
+                            <button onClick={() => {
+                                setShowSideBard(true)
+                            }} type="button"
+                                    className="flex items-center w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden border "
+                            >
+                                <AiOutlineMenu size={22} className={"text-white"}/>
                             </button>
                             <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-                                <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg  md:flex-row rtl:space-x-reverse md:mt-0 md:border-0 ">
+                                <ul title={"navbar"}
+                                    className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg  md:flex-row rtl:space-x-reverse md:mt-0 md:border-0 ">
                                     {navLinks.map(item => {
                                         let {href, label} = item;
                                         return (
