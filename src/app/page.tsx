@@ -89,7 +89,7 @@ export default function Home() {
 
                   </div>
               </div>
-              <div className="bg-[#282936] text-white w-full flex justify-center text-sm py-4">
+              <div className="bg-[#282936] text-white w-full flex justify-center text-sm ">
                   <div className="container mx-auto flex  justify-center gap-8 items-center space-x-4">
                       <div className="flex space-x-10 overflow-x-auto scrollbar-hide">
                           {announcements.map((announcement, index) => (

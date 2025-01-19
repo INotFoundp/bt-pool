@@ -14,7 +14,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`antialiased`}>
       <Header/>
-      <main className={"w-full bg-[#F5F6FA] "}>
+      <main className={"w-ful mt-12 py-4 bg-[#F5F6FA] "}>
           {children}
       </main>
       <Footer />

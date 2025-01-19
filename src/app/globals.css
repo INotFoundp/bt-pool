@@ -11,9 +11,32 @@
     font-display: swap;
     src: url("../fonts/logo/logofont.ttf");
 }
+@font-face {
+    font-family: 'KOTATUA-font';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("../fonts/KOTATUA.otf");
+}
+
+@font-face {
+    font-family: 'Dina-font';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("../fonts/DINAlternate-Bold.ttf");
+}
 
 .logo-font {
     font-family: 'logo-font', serif;
+}
+
+.KOTATUA-font  {
+    font-family: 'KOTATUA-font', serif;
+}
+
+.Dina-font {
+    font-family: 'Dina-font', serif;
 }
 
 @layer base {
