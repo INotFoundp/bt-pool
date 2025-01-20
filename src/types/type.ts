@@ -39,3 +39,20 @@ export interface RequestType<T extends any> {
     ok : boolean
     data : T
 }
+
+export interface CoinType  {
+    Id: string,
+    Name: string,
+    FullName: string,
+    Internal: string,
+    ImageUrl: string,
+    Url: string,
+    NetHashesPerSecond: number,
+    BlockNumber: number,
+    BlockTime: number,
+    BlockReward: number,
+    TotalCoinsMined: number,
+    AssetLaunchDate: Date,
+    MaxSupply: number
+    price : number
+}

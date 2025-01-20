@@ -14,17 +14,17 @@ datasource db {
 }
 
 model User {
-  id       String @id @unique @default(uuid())
+  id       String   @id @unique @default(uuid())
   /// username
-  username String @unique
+  username String   @unique
   /// passworl
   password String
   /// name
   name     String
   /// email
-  email    String @unique
-
-  profit Profit[]
+  email    String   @unique
+  worker   Worker[]
+  profit   Profit[]
 }
 
 model Profit {
@@ -60,4 +60,22 @@ model PplnsProfit {
   profit       Float
   profit_id    String
   base_profit  Profit   @relation(fields: [profit_id], onDelete: Cascade, onUpdate: Cascade, references: [id])
+}
+
+model Worker {
+  id            String       @id @unique @default(uuid())
+  nurmic_id     Int          @default(autoincrement())
+  status        WorkerStatus @default(INACTIVE)
+  minut_profit  Int
+  hour_profit   Int
+  rejected_rate Int
+  last_submit   DateTime
+  user_id       String
+  user          User         @relation(fields: [user_id], onUpdate: Cascade, onDelete: Cascade, references: [id])
+}
+
+enum WorkerStatus {
+  ACTIVE
+  OFFLINE
+  INACTIVE
 }

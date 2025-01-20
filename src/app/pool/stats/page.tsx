@@ -2,11 +2,12 @@
 
 import StatsCard from "@/components/cards/poolDahboard/StatsCard";
 
-import {Pie, PieChart, ResponsiveContainer, Sector} from "recharts";
-import React from "react";
+import {Area, AreaChart, Pie, PieChart, ResponsiveContainer, Sector, Tooltip, XAxis, YAxis} from "recharts";
+import React, {useState} from "react";
+import Link from "next/link";
 
 export default function Page() {
-
+    const [activeSeg, setActiveSeg] = useState("minute")
     const cards = {
         accountInfo: {
             label: "Account Info",
@@ -46,6 +47,78 @@ export default function Page() {
         {name: 'Group C', value: 100},
         {name: 'Group D', value: 100},
     ];
+
+    const d = [
+        {
+            name: 'Page A',
+            uv: 4000,
+            pv: 2400,
+            amt: 2400,
+        },
+        {
+            name: 'Page B',
+            uv: 3000,
+            pv: 1398,
+            amt: 2210,
+        },
+        {
+            name: 'Page C',
+            uv: 2000,
+            pv: 9800,
+            amt: 2290,
+        },
+        {
+            name: 'Page D',
+            uv: 2780,
+            pv: 3908,
+            amt: 2000,
+        },
+        {
+            name: 'Page E',
+            uv: 1890,
+            pv: 4800,
+            amt: 2181,
+        },
+        {
+            name: 'Page F',
+            uv: 2390,
+            pv: 3800,
+            amt: 2500,
+        },
+        {
+            name: 'Page G',
+            uv: 3490,
+            pv: 4300,
+            amt: 2100,
+        }, {
+            name: 'Page G',
+            uv: 3490,
+            pv: 4300,
+            amt: 2100,
+        }, {
+            name: 'Page G',
+            uv: 3490,
+            pv: 4300,
+            amt: 2100,
+        }, {
+            name: 'Page G',
+            uv: null,
+            pv: null,
+            amt: 2100,
+        }, {
+            name: 'Page G',
+            uv: null,
+            pv: null,
+            amt: 2100,
+        }, {
+            name: 'Page G',
+            uv: null,
+            pv: null,
+            amt: 2100,
+        },
+    ];
+
+
 
 
     const renderActiveShape = (props: any) => {
@@ -95,13 +168,29 @@ export default function Page() {
         );
     };
 
+    const segmentButtons = {
+        minute: {
+            label: "10-min",
+            value: "minute"
+        },
+        hour: {
+            label: "1-hour",
+            value: "hour"
+        },
+        days: {
+            label: "daily",
+            value: "Daily"
+        },
+    }
+
     return (
-        <div className={" flex flex-col gap-6"}>
-            <div className={"flex w-full gap-4"}>
+        <div className={" flex flex-col  gap-6"}>
+            <div className={"flex flex-col md:flex-row w-full gap-4"}>
                 {Object.entries(cards).map(([key, value]) => {
                     let {content, label, sub_contents} = value;
+
                     return (
-                        <StatsCard className={"w-1/3"} key={key} title={label}>
+                        <StatsCard className={" w-full md:w-1/3"} key={key} title={label}>
                             <div className={"flex justify-between h-full items-center w-full flex-col gap-4"}>
                                 <div className={"flex flex-col items-center gap-4"}>
                                     <h5 className={"text-zinc-700  "}>{content.title}</h5>
@@ -119,6 +208,7 @@ export default function Page() {
                                     <div className={'flex justify-between px-8 gap-20 w-full'}>
                                         {sub_contents.map(item => {
                                             let {label: label1, sub, value: value1} = item;
+
                                             return (
                                                 <div className={"w-full flex flex-col gap-1"} key={label1}>
                                                     <div className={"flex gap-1 text-xs"}>
@@ -140,7 +230,7 @@ export default function Page() {
                     )
                 })}
 
-                <StatsCard className={"w-1/3"} title={"Worker"}>
+                <StatsCard className={"w-full md:w-1/3"} title={"Worker"}>
                     <div className={"w-full flex justify-between h-full"}>
                         <ResponsiveContainer width=" 60%" height="100%">
                             <PieChart width={400} height={400}>
@@ -166,16 +256,105 @@ export default function Page() {
 
                 </StatsCard>
             </div>
+            <div>
+                <StatsCard className={"w-full h-fit "} title={"Hashrate."}>
 
-            <div className={"w-full justify-between flex gap-4"}>
-                <StatsCard className={"w-2/3"} title={"test"}>
-                    <div>
 
+                    <div className={"mb-12"}>
+                        <div className={"flex gap-4"}>
+                            {Object.entries(segmentButtons).map(([key, val]) => {
+                                let {label, value} = val;
+                                const isActive = value == activeSeg
+                                return (
+                                    <span onClick={() => {
+                                        setActiveSeg(value)
+                                    }}
+                                          className={` cursor-pointer transition py-2 ${isActive ? "border-[#05CDCD] text-[#05CDCD]  border-b-2" : ""} `}>
+                                       {label}
+                                    </span>
+                                )
+                            })}
+
+                        </div>
+                    </div>
+                    <div className={" md:h-[400px] h-[550px]"}>
+                        <ResponsiveContainer width="100%" height="100%">
+                            <AreaChart
+                                width={500}
+                                height={400}
+                                data={d}
+                                margin={{
+                                    top: 10,
+                                    right: 30,
+                                    left: 0,
+                                    bottom: 0,
+                                }}
+
+                            >
+
+                                <XAxis dataKey="name"/>
+                                <YAxis/>
+                                <Tooltip/>
+                                <Area type="monotone" dataKey="uv" stroke="" fill="#2980b9"/>
+                            </AreaChart>
+                        </ResponsiveContainer>
+                    </div>
+
+                </StatsCard>
+
+            </div>
+            <div className={"w-full flex-col md:flex-row  justify-between flex gap-4"}>
+                <StatsCard className={"md:w-2/3 w-full md:h-[290px] h-fit"} title={"Stratum URL"}>
+                    <div className={"flex md:gap-2 gap-4 flex-col md:flex-row "}>
+                        <div className={"flex w-full md:border-r md:border-b-0 border-b   flex-col gap-4"}>
+                            <div>
+                                <span className={"p-2 text-sm  border"}>Recommended</span>
+                            </div>
+
+                            <div className={"flex flex-col gap-4"}>
+                                <div>
+                                    <h3 className={"text-zinc-500"}>BTC Stratum URL:</h3>
+                                    <span className={"text-sm"}>
+                                        stratum+tcp://btc.bt-pool.io:3333
+                                    </span>
+                                </div>
+                                <div>
+                                    <h3 className={"text-zinc-500"}>BTC Stratum URL:</h3>
+                                    <span className={"text-sm"}>
+                                        stratum+tcp://btc.bt-pool.io:3333
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <small className={"text-zinc-700"}>
+                                    Note: Port 25/443 is available too.
+                                </small>
+                            </div>
+                        </div>
+                        <div className={"w-full flex flex-col justify-between items-start"}>
+                            <p className={"text-sm font-semibold text-zinc-400  leading-8"}>
+                                Create a Miner ID in the form of account name mahdidb1 or mahdidb1.workerID and any
+                                password for it. WorkerID should consist of numbers and lowercase letters no longer than
+                                64 characters.
+                            </p>
+
+                            <div className={"text-sm text-[#05CDCD] pb-3"}>
+                                <Link href={"worker"}>Add Worker {"->"} </Link>
+                            </div>
+                        </div>
                     </div>
                 </StatsCard>
-                <StatsCard className={"w-1/3"} title={"jsj 2"}>
-                    <div>
-
+                <StatsCard className={" w-full md:w-1/3"} title={"After-Sale Service"}>
+                    <div className={"flex flex-col gap-4"}>
+                        <div className={"flex justify-between text-sm items-center"}>
+                            <span className={"text-zinc-400"}>Email</span>
+                            <span className={"text-[#05CDCD]"}>poorya.comsanjari@gmai,com</span>
+                        </div>
+                        <div className={"flex justify-between text-sm items-center"}>
+                            <span className={"text-zinc-400"}>Telegram</span>
+                            <span className={"text-[#05CDCD]"}>@BT_POOL</span>
+                        </div>
                     </div>
                 </StatsCard>
             </div>

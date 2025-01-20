@@ -1,8 +1,9 @@
 import {ReactNode} from "react";
 
-export default function StatsCard({children, title, className = ""}: {
+export default function StatsCard({children, title ,childrenClassName ="" , className = ""}: {
     children: ReactNode,
     title: string,
+    childrenClassName? : HTMLDivElement["className"]
     className?: HTMLDivElement["className"]
 }) {
     return (
@@ -11,7 +12,7 @@ export default function StatsCard({children, title, className = ""}: {
                 <h5 className={"text-zinc-800 font-bold text-lg"}>{title}</h5>
             </div>
             <hr/>
-            <div className={"p-5 h-[calc(100%-68px)] w-full pb-6"}>
+            <div className={`p-5 ${childrenClassName} h-[calc(100%-68px)] w-full pb-6`}>
                 {children}
             </div>
         </div>

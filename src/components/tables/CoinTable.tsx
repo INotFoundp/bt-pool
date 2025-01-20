@@ -1,4 +1,6 @@
 import React from "react";
+import {CoinType} from "@/types/type";
+import Image from "next/image";
 
 const CoinTable = ({ coins } : {coins : any}) => {
     return (
@@ -17,30 +19,53 @@ const CoinTable = ({ coins } : {coins : any}) => {
                 </tr>
                 </thead>
                 <tbody>
-                {coins.map((coin : any, index : number) => (
-                    <tr
-                        key={index}
-                        className="border-b border-gray-200 hover:bg-gray-50"
-                    >
-                        <td className="p-4 flex items-center space-x-4">
+                {coins.map((coin: CoinType, index: number) => {
 
-                            <img src={coin.icon} alt={coin.name} className="md:w-10 w-6 md:h-10" />
-                            <div>
-                                <p className={"text-black text-lg font-semibold"} >{coin.name}</p>
-                                <span className="text-sm text hidden text-black">{coin.extra}</span>
-                            </div>
-                        </td>
-                        <td className="p-4 text-black font-semibold  text-sm md:text-lg">{coin.dailyProfit}</td>
-                        <td className="p-4 text-black font-semibold  text-sm md:text-lg">{coin.price}</td>
-                        <td className="p-4 text-black font-semibold  text-sm md:text-lg">{coin.poolHashrate}</td>
-                        <td className="p-4 text-black font-semibold  text-sm md:text-lg">{coin.hashrate}</td>
-                        <td className="p-4 text-black font-semibold  text-sm md:text-lg">{coin.miner}</td>
-                        <td className="p-4 text-black font-semibold  text-sm md:text-lg">{coin.difficulty}</td>
-                        <td className="p-4 text-black font-semibold  text-sm md:text-lg">
-                            <button className="text-blue-500 hover:underline">Guide</button>
-                        </td>
-                    </tr>
-                ))}
+                        let {
+                            AssetLaunchDate,
+                            BlockNumber,
+                            BlockReward,
+                            BlockTime,
+                            FullName,
+                            Id,
+                            ImageUrl,
+                            Internal,
+                            MaxSupply,
+                            Name,
+                            NetHashesPerSecond,
+                            TotalCoinsMined,
+                            Url ,
+                            price
+                        } = coin;
+                    console.log(coin)
+                    console.log(`/images/coin/${Name}.png`)
+
+                        return (
+                            <tr
+                                key={index}
+                                className="border-b border-gray-200 hover:bg-gray-50"
+                            >
+                                <td className="p-4 flex items-center space-x-4">
+
+                                    <Image width={40} height={40} src={`/images/coin/${Name}.png`} alt={Name} className="md:w-10 w-6 md:h-10"/>
+                                    <div>
+                                        <p className={"text-black text-lg font-semibold"}>{Name}</p>
+                                        <span className="text-sm text hidden text-black">{"USD"}</span>
+                                    </div>
+                                </td>
+                                <td className="p-4 text-black font-semibold  text-sm md:text-lg">{BlockReward}</td>
+                                <td className="p-4 text-black font-semibold  text-sm md:text-lg">{price}</td>
+                                <td className="p-4 text-black font-semibold  text-sm md:text-lg">{109.49}</td>
+                                <td className="p-4 text-black font-semibold  text-sm md:text-lg">{779.60}</td>
+                                <td className="p-4 text-black font-semibold  text-sm md:text-lg">{1190319}</td>
+                                <td className="p-4 text-black font-semibold  text-sm md:text-lg">{"110.45T"}</td>
+                                <td className="p-4 text-black font-semibold  text-sm md:text-lg">
+                                    <button className="text-blue-500 hover:underline">Guide</button>
+                                </td>
+                            </tr>
+                        )
+                    }
+                )}
                 </tbody>
             </table>
         </div>

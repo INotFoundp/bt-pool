@@ -6,7 +6,6 @@ import Link from "next/link";
 import {AiOutlineClose, AiOutlineMenu} from "react-icons/ai";
 import {usePathname, useRouter} from "next/navigation";
 import {Button} from "@/components/ui/button";
-import useGetData from "@/hooks/useGetData";
 import {User} from "@prisma/client";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 
@@ -14,7 +13,7 @@ import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {CiUser} from "react-icons/ci";
 
 
-export default  function Header() {
+export default function Header({user}: { user: User | null }) {
     const router = useRouter()
     const [showSideBard, setShowSideBard] = useState(false)
     const pathname = usePathname()
@@ -24,9 +23,6 @@ export default  function Header() {
         {label: "Assets", href: "assets"},
         {label: "Blog", href: "blog"},
     ]
-
-    const {data, loading, refetch} = useGetData<User>("/user/me")
-
 
     useEffect(() => {
         setShowSideBard(false)
@@ -97,7 +93,7 @@ export default  function Header() {
                             <div className=" flex flex-wrap items-center justify-between mx-auto ">
                                 <button onClick={() => {
                                     setShowSideBard(true)
-                                }} type="button"
+                                }}
                                         className="flex items-center w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden border "
                                 >
                                     <AiOutlineMenu size={22} className={"text-white"}/>
@@ -126,15 +122,9 @@ export default  function Header() {
                 </div>
 
                 <div className={"text-white flex gap-4"}>
-                    {loading ? (
-                        <Button>
-                            <div className={"border-r-2 rounded-full w-3 h-3 animate-spin"}>
-                            </div>
-                            Loading
-                        </Button>
-                    ) : (
+
                         <>
-                            {data?.id ? (
+                            {user?.id ? (
                                 <div className={"px-3"}>
 
                                     <Popover open={popOver}>
@@ -182,7 +172,7 @@ export default  function Header() {
                             )}
 
                         </>
-                    )}
+
 
                 </div>
             </div>

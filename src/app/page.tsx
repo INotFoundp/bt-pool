@@ -1,7 +1,38 @@
 import {Carousel, CarouselContent, CarouselItem} from "@/components/ui/carousel";
 import CoinTable from "@/components/tables/CoinTable";
+import axios from "axios";
+import Image from "next/image";
 
-export default function Home() {
+export default async function Home() {
+
+    let data = []
+
+    try {
+        const priceResponse = await axios.get(
+            'https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,LTC&tsyms=USD'
+        );
+
+        const prices = priceResponse.data;
+
+
+        const miningResponse = await axios.get(
+            'https://min-api.cryptocompare.com/data/blockchain/mining/calculator?fsyms=BTC,ETH,LTC&tsyms=USD'
+        );
+
+        const miningData = miningResponse.data.Data;
+
+
+        const tableData = Object.keys(prices).map((coin) => {
+            const price = prices[coin]?.USD || 'N/A';
+            return {...miningData[coin].CoinInfo, price}
+        });
+
+        data = tableData ?? []
+
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+
 
 
     const sampleCoins = [
@@ -27,7 +58,7 @@ export default function Home() {
             miner: "10116",
             difficulty: "497.80G",
         },
-        // Add more coins as needed
+
     ];
 
 
@@ -105,12 +136,77 @@ export default function Home() {
               </div>
           </section>
 
-          <section className={"w-full h-screen"}>
+          <section className={"w-full py-[60px]"}>
               <div className={"w-full md:w-8/12 bg-white   mx-auto"}>
-                  <div className="  min-h-screen">
-                      <CoinTable coins={sampleCoins}/>
+                  <div className=" h-fit ">
+                      <CoinTable coins={data}/>
                   </div>
               </div>
+          </section>
+
+          <section className={"min-h-[50dhv] md:h-fit flex flex-col gap-12 py-[60px] w-full bg-gray-200"}>
+              <div className={"w-full flex justify-center"}>
+                  <h2 className={"text-4xl font-semibold"}>Why People Using BT-Coin</h2>
+              </div>
+
+              <div className={"flex md:gap-24 flex-col gap-10 md:flex-row items-center justify-center"}>
+                  {Array.from({length: 3}).map((item, index) => (
+                      <div key={index}
+                           className={"w-[360px] flex flex-col justify-between py-10 px-5 bg-white h-[480px]"}>
+                          <div className={"w-full flex justify-center"}>
+                              <img src="/images/icon/1.svg" alt="1"/>
+                          </div>
+
+                          <div className={"flex flex-col gap-4 items-center"}>
+                              <div>
+                                  <h5 className={"text-lg"}>Brand Strength</h5>
+                              </div>
+
+                              <div>
+                                  <p className={"text-center text-sm text-zinc-400 leading-7"}>
+                                      The world's top all-inclusive mining pool
+                                      Global services in 150+ countries/regions
+                                      Covering over 1 million users worldwide
+                                      Multi-billion dollar worth of cumulative mining output value
+                                  </p>
+                              </div>
+                          </div>
+
+                      </div>
+                  ))}
+
+              </div>
+          </section>
+          <section className={"min-h-[50dhv]  md:h-fit flex flex-col gap-12 py-[60px] w-full bg-gray-100"}>
+              <div className={"w-full flex justify-center"}>
+                  <h2 className={"text-4xl font-semibold"}>One-Stop Mining Services, All in BT COIN</h2>
+              </div>
+
+
+              <div className={"flex flex-col md:flex-row justify-center gap-24"}>
+
+                  {Array.from({length : 4}).map((item, index) => (
+                      <div className={" flex flex-col  gap-4"}>
+                          <div className={"pl-4"}>
+                              <Image width={50} height={50} src={"/images/icon/sec2.png"} alt={"sec2"}/>
+                          </div>
+                          <div className={"pl-4 py-2"}>
+                              <h4 className={"text-lg"}>Mining Management</h4>
+                          </div>
+                          <div className={"flex flex-col gap-4"}>
+                              {Array.from({length: 4}).map(item => (
+                                  <div className={"flex gap-2 text-sm text-zinc-500 items-center"}>
+                                      <span className={"w-1.5 rounded-full bg-[rgb(5,205,205)] h-1.5"}></span>
+                                      <p>View mining profit in a click</p>
+                                  </div>
+                              ))}
+                          </div>
+                      </div>
+                  ))}
+
+
+              </div>
+
           </section>
       </div>
   );

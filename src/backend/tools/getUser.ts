@@ -6,12 +6,20 @@ export default async function getUserFromCookie() {
     const cookie = await cookies()
 
 
-    const id = jwt.verify(cookie.get("token")?.value + "", process.env.JWT_SECRET + "")
+    const token = cookie.get("token")?.value + ""
 
-    return await prisma.user.findUnique({
-        where: {
-            id: id + ""
-        }
-    })
+    if (!token) return null
+
+    try {
+        const id = jwt.verify(token, process.env.JWT_SECRET + "")
+        return await prisma.user.findUnique({
+            where: {
+                id: id + ""
+            }
+        })
+    } catch (e) {
+        return null
+    }
+
 }
 
