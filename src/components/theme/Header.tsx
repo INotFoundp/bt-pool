@@ -132,7 +132,7 @@ export default function Header({user}: { user: User | null }) {
             )}
 
 
-            <div className={"w-full flex px-2 flex-row-reverse justify-between"}>
+            <div className={"w-full md:hidden flex px-2 flex-row-reverse justify-between"}>
 
 
                 <button onClick={() => {
