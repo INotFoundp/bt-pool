@@ -8,7 +8,7 @@ export default async function Layout({children}: { children: ReactNode }) {
 
     const user = await getUserFromCookie()
 
-    console.log(user)
+
 
     if (!user) return redirect("/admin/auth/login")
 
