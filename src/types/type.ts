@@ -8,7 +8,7 @@ export interface FormType {
     className?: string
     placeholder?: string
     key: string
-    Icon  : IconType
+    Icon?: IconType
     extra?: ExtraType<FormType["type"]>;
 
 }

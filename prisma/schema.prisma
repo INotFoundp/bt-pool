@@ -14,17 +14,24 @@ datasource db {
 }
 
 model User {
-  id       String   @id @unique @default(uuid())
+  id             String   @id @unique @default(uuid())
   /// username
-  username String   @unique
+  username       String   @unique
   /// passworl
-  password String
+  password       String
   /// name
-  name     String
+  name           String
   /// email
-  email    String   @unique
-  worker   Worker[]
-  profit   Profit[]
+  email          String   @unique
+  worker         Worker[]
+  profit         Profit[]
+  balance        Float?   @default(0)
+  total_earning  Float?   @default(0)
+  last_profit    Float?   @default(0)
+  hsashrate      Float?   @default(0)
+  daily_hashrate Float?   @default(0)
+  role           Roles    @default(USER)
+  hour_hashrate  Float?   @default(0)
 }
 
 model Profit {
@@ -78,4 +85,9 @@ enum WorkerStatus {
   ACTIVE
   OFFLINE
   INACTIVE
+}
+
+enum Roles {
+  USER
+  ADMIN
 }

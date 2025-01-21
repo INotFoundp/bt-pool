@@ -8,7 +8,16 @@ import {cookies} from "next/headers";
 export async function POST(req: NextRequest, res: NextResponse) {
     const data = await req.json()
 
+
     try {
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        const isValidEmail = (email: string): boolean => emailRegex.test(email);
+
+
+        if (!isValidEmail(data?.email)) return error("Invalid email");
+
         const user = await prisma.user.findUnique({
             where: {
                 email: data?.email

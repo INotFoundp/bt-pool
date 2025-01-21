@@ -42,13 +42,32 @@ export default function Header({user}: { user: User | null }) {
             href: "earning"
         },
     }
+    const [scrollY, setScrollY] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrollY(window.scrollY);
+        };
+
+
+        handleScroll();
+
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+
+
+    }, []);
+
 
 
     return (
-        <header className={"w-full fixed z-40 bg-opacity-100 top-0 py-2 pb-3 bg-[#03060D] "}>
+        <header
+            className={`w-full fixed z-50 ${scrollY > 0 ? " bg-[#03060D]" : "bg-transparent"} top-0 transition py-6  `}>
             {showSideBard && (
-                <div className={"w-full  h-screen bg-[#03060D] fixed z-40"}>
-                    <div className={"px-3 flex flex-col items-end gap-5 justify-end"}>
+                <div className={"w-full flex flex-col justify-between  h-[100dvh] bg-[#03060D] fixed top-0 py-6 z-40"}>
+                    <div className={"px-3 flex flex-col items-end gap-6 justify-end"}>
 
                         <div className={"flex flex-row-reverse justify-between w-full"}>
                             <button onClick={() => {
@@ -78,12 +97,32 @@ export default function Header({user}: { user: User | null }) {
 
                     </div>
 
+                    <div className={"w-full flex px-6 justify-between gap-2"}>
+                        <Button size={"lg"}
+                                className={"bg-[#4A6CF7]  w-full rounded active:scale-[0.98] hover:bg-[#4A6CF7]/70"}
+                                onClick={async () => {
+                                    router.push("/signup")
+                                }}
+                        >
+                            Sign up
+                        </Button>
+
+                        <Button onClick={() => {
+                            router.push("/login")
+                        }}
+                                size={"lg"}
+                                className={"bg-[#4A6CF7]/30 w-full  rounded active:scale-[0.98] hover:bg-[#4A6CF7]/70"}
+                                variant={"default"}>
+                            Sign in
+                        </Button>
+                    </div>
+
                 </div>
             )}
 
             <div className={"flex container  items-center mx-auto"}>
                 <div
-                    className={" px-3 flex w-full flex-row-reverse md:flex-row justify-between items-center gap-3"}>
+                    className={" px-3 flex w-full flex-row md:flex-row justify-between items-center gap-3"}>
                     <div className={"w-fit"}>
                         <Logo/>
                     </div>
@@ -98,7 +137,7 @@ export default function Header({user}: { user: User | null }) {
                                 >
                                     <AiOutlineMenu size={22} className={"text-white"}/>
                                 </button>
-                                <div className="hidden w-full md:block md:w-auto" id="navbar-default">
+                                <div className="hidden w-full ml-16  md:block md:w-auto" id="navbar-default">
                                     <ul title={"navbar"}
                                         className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg  md:flex-row rtl:space-x-reverse md:mt-0 md:border-0 ">
                                         {navLinks.map(item => {
@@ -107,7 +146,7 @@ export default function Header({user}: { user: User | null }) {
                                                 <Link
                                                     key={href}
                                                     href={`/${href}`}
-                                                    className="block py-2 hover:text-blue-600 px-3 text-white !bg-transparent"
+                                                    className="block py-2 text-base font-bold hover:text-white px-3 text-[#79808A] !bg-transparent"
                                                 >
                                                     {label}
                                                 </Link>
@@ -115,6 +154,9 @@ export default function Header({user}: { user: User | null }) {
                                         })}
 
                                     </ul>
+
+
+
                                 </div>
                             </div>
                         </nav>
@@ -131,10 +173,15 @@ export default function Header({user}: { user: User | null }) {
                                         <PopoverTrigger>
                                             <Button onClick={() => {
                                                 setPopOver(prev => !prev)
-                                            }} size={"sm"}
-                                                    className={" border bg-transparent bg-opacity-50 border-white"}
+                                            }} size={"lg"}
+                                                    className={"bg-[#4A6CF7]/30 rounded active:scale-[0.98] hover:bg-[#4A6CF7]/70"}
+
                                                     variant={"default"}>
-                                                <CiUser/>
+                                                <span className={""}>
+                                                       {user?.name}
+                                                </span>
+
+                                                <CiUser size={30}/>
                                             </Button>
                                         </PopoverTrigger>
                                         <PopoverContent
@@ -156,15 +203,21 @@ export default function Header({user}: { user: User | null }) {
                                 </div>
                             ) : (
                                 <>
-                                    <Button onClick={async () => {
-                                        router.push("/signup")
-                                    }} size={"sm"} className={" border bg-transparent bg-opacity-50 border-white"}
-                                            variant={"default"}>
+
+                                    <Button size={"lg"}
+                                            className={"bg-[#4A6CF7] hidden md:block rounded active:scale-[0.98] hover:bg-[#4A6CF7]/70"}
+                                            onClick={async () => {
+                                                router.push("/signup")
+                                            }}
+                                    >
                                         Sign up
                                     </Button>
+
                                     <Button onClick={() => {
                                         router.push("/login")
-                                    }} size={"sm"} className={"  bg-opacity-50 bg-transparent border-white"}
+                                    }}
+                                            size={"lg"}
+                                            className={"bg-[#4A6CF7]/30 hidden md:block rounded active:scale-[0.98] hover:bg-[#4A6CF7]/70"}
                                             variant={"default"}>
                                         Sign in
                                     </Button>

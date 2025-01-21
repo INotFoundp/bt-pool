@@ -4,8 +4,8 @@ import Image from "next/image";
 
 const CoinTable = ({ coins } : {coins : any}) => {
     return (
-        <div className="overflow-x-auto">
-            <table className="min-w-full bg-white text-gray-800 text-sm border-collapse border ">
+        <div className="overflow-x-auto ">
+            <table className="min-w-full bg-white  text-gray-800 text-sm border-collapse border ">
                 <thead className={"py-2"}>
                 <tr className=" border-b p-4 ">
                     <th className="p-4 text-left">Coin Type</th>
