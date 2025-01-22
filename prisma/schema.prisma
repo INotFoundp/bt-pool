@@ -35,38 +35,18 @@ model User {
 }
 
 model Profit {
-  id               String        @unique @default(uuid())
-  created_at       DateTime      @default(now())
+  id               String   @unique @default(uuid())
+  created_at       DateTime @default(now())
   hashrat          String
   total_profit     Float
   unit_output      Float
   coin_price       Float
   usd_total_profit Float
-  psp_profit       PPSprofit[]
-  pplns_profit     PplnsProfit[]
+  psp_profit       Float
+  pplns_profit     Float
   solo_profit      Float
   user_id          String
-  user             User          @relation(fields: [user_id], onDelete: Cascade, onUpdate: Cascade, references: [id])
-}
-
-model PPSprofit {
-  id          String   @id @unique @default(uuid())
-  start_time  DateTime
-  end_time    DateTime
-  hashrate    String
-  profit      Float
-  profit_id   String
-  base_profit Profit   @relation(fields: [profit_id], onUpdate: Cascade, onDelete: Cascade, references: [id])
-}
-
-model PplnsProfit {
-  id           String   @id @unique @default(uuid())
-  time         DateTime
-  block_height Int
-  block_reward Float
-  profit       Float
-  profit_id    String
-  base_profit  Profit   @relation(fields: [profit_id], onDelete: Cascade, onUpdate: Cascade, references: [id])
+  user             User     @relation(fields: [user_id], onDelete: Cascade, onUpdate: Cascade, references: [id])
 }
 
 model Worker {

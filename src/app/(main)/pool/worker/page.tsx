@@ -2,19 +2,22 @@
 
 import StatsCard from "@/components/cards/poolDahboard/StatsCard";
 import {Input} from "@/components/ui/input";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import useGetData from "@/hooks/useGetData";
 import {Worker} from "@prisma/client";
 import Loader from "@/components/theme/Loader";
+// @ts-ignore
+import { FaSearch } from "react-icons/fa";
+import {Button} from "@/components/ui/button";
 
 
 export default function Page() {
-
+    const [workers, setWorkers] = useState<Worker[]>([])
     const {data, loading} = useGetData<Worker[]>("/user/pool/worker")
 
     const [mainGroup, setMainGroup] = useState("all")
     const [activeSeg, setActiveSeg] = useState("all")
-
+    const [searched, setSearched] = useState("")
 
     function filterAndGetLength(data: Worker[], key: Worker["status"]) {
         return data?.filter?.(item => item.status === key).length ?? 0
@@ -28,6 +31,7 @@ export default function Page() {
         },
 
     }
+
 
     const segmentButtons = {
         all: {
@@ -52,25 +56,36 @@ export default function Page() {
         },
     }
 
-    const invoices = [
-        {
-            worker_number: "001",
-            min: "0",
-            hour: "0",
-            reject_rate: "0%",
-            last_submit: new Date().toLocaleDateString(),
-            status: "ACTIVE",
-        },
+    const stats_color = {
+        OFFLINE: "red",
+        INACTIVE: "orange",
+        ACTIVE: "green"
+    }
 
-    ]
+    useEffect(() => {
+        if (!loading && data?.length) {
+            setWorkers(data)
+        }
+    }, [data]);
+
+    useEffect(() => {
+        if (activeSeg === "all") {
+            setWorkers(data ?? [])
+            return;
+        }
+
+        const filtered = data?.filter?.(i => i.status.toLocaleLowerCase() === activeSeg)
+        setWorkers(filtered)
+    }, [activeSeg, data]);
 
 
     if (loading) return <Loader/>
 
     return (
-        <div className={"z-40"}>
-            <div className={"w-full z-40 flex flex-col md:flex-row  gap-4"}>
-                <StatsCard childrenClassName={"px-0"} className={"w-full md:w-3/12"} title={"My Group"}>
+        <div className={"z-40 relative"}>
+            <div className={"w-full z-40  flex flex-col md:flex-row  gap-4"}>
+                <StatsCard childrenClassName={"px-0"} className={"w-full sticky top-28 left-0  md:w-3/12"}
+                           title={"My Group"}>
                     <div className={"w-full z-40 flex flex-col"}>
                         {Object.entries(miners).map(([key, val]) => {
                             let {label, value, count} = val;
@@ -113,9 +128,7 @@ export default function Page() {
                                 })}
 
                             </div>
-                            <div>
-                                <Input placeholder={"Enter Miner Name"} type={"text"}/>
-                            </div>
+
                         </div>
 
                         {!!data?.length ? (
@@ -150,7 +163,7 @@ export default function Page() {
                                         </thead>
                                         <tbody>
 
-                                        {data?.map?.((worker) => {
+                                        {workers?.map?.((worker, index) => {
                                             const {
                                                 status,
                                                 last_submit,
@@ -164,7 +177,7 @@ export default function Page() {
                                                 <tr className=" z-40   text-white bg-[#282936]/50 last:border-0 border-b dark:border-gray-700">
                                                     <th scope="row"
                                                         className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                                        {nurmic_id}
+                                                        {index >= 9 ? "0" : "00"}{index + 1}
                                                     </th>
                                                     <td className="px-6 py-4">
                                                         {minut_profit}
@@ -178,7 +191,7 @@ export default function Page() {
                                                     <td className="px-6 py-4">
                                                         {new Date(last_submit).toLocaleDateString()}
                                                     </td>
-                                                    <td className="px-6 text-green-500 py-4">
+                                                    <td style={{color : stats_color[status as keyof typeof stats_color]}} className="px-6 py-4">
                                                         {status}
                                                     </td>
                                                 </tr>

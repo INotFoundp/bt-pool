@@ -179,35 +179,16 @@ export default function Page() {
 
             </div>
             <div>
-                <StatsCard className={" w-full h-fit"} title={"Worker List"}>
+                <StatsCard className={" w-full h-fit"} title={"Profit Detail"}>
                     <div>
-                        <div className={"mb-12 flex flex-col-reverse gap-4 md:flex-row justify-between"}>
-                            <div className={"flex "}>
-                                {Object.entries(segmentTableButtons).map(([key, val]) => {
-                                    let {label, value} = val;
-                                    const isActive = value == activeSeg
-                                    return (
-                                        <span onClick={() => {
-                                            setActiveSeg(value)
-                                        }}
-                                              className={` px-5 cursor-pointer text-sm   transition py-2 ${isActive ? "border-[#05CDCD] text-[#05CDCD] bg-white  rounded-sm rounded-b-none  border-b-2" : "text-zinc-700 bg-[#F5F6FA]"} `}>
-                                       {label}
-                                    </span>
-                                    )
-                                })}
 
-                            </div>
-                            <div>
-                                <Input placeholder={"Enter Miner Name"} type={"text"}/>
-                            </div>
-                        </div>
                         <div>
 
                             <div className="relative overflow-x-auto  sm:rounded-lg">
                                 <table
                                     className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                     <thead
-                                        className="text-xs text-gray-700 uppercase w-full dark:bg-gray-700 dark:text-gray-400">
+                                        className="text-xs text-gray-500 uppercase w-full dark:bg-gray-700 dark:text-gray-400">
                                     <tr>
                                         <th scope="col" className="px-6 text-xs  py-3">
                                             Date
@@ -254,7 +235,7 @@ export default function Page() {
                                             unit_output
                                         } = profit;
                                         return (
-                                            <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 last:border-0 border-b dark:border-gray-700">
+                                            <tr className="z-40   text-white bg-[#282936]/50 last:border-0 border-b dark:border-gray-700">
                                                 <th scope="row"
                                                     className="px-6 py-4   dark:text-white">
                                                     {date}

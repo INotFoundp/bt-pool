@@ -12,6 +12,7 @@ import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 // @ts-ignore
 import {CiUser} from "react-icons/ci";
 import useWindowSize from "@/hooks/useWindowsSize";
+import request from "@/utils/request";
 
 
 export default function Header({user}: { user: User | null }) {
@@ -65,6 +66,12 @@ export default function Header({user}: { user: User | null }) {
 
     const {width} = useWindowSize()
 
+    useEffect(() => {
+        if(width > 768) {
+            setShowSideBard(false)
+        }
+    }, [width]);
+
     return (
         <header
             className={`w-full fixed z-50 ${scrollY > 0 ? " bg-[#03060D]" : "bg-transparent"} top-0 transition py-6  `}>
@@ -104,7 +111,7 @@ export default function Header({user}: { user: User | null }) {
 
                         {!user?.id && (
                             <>
-                                <Button size={width > 769 ? "lg" : "sm"}
+                                <Button size={"lg" }
                                         className={"bg-[#4A6CF7]  w-full rounded active:scale-[0.98] hover:bg-[#4A6CF7]/70"}
                                         onClick={async () => {
                                             router.push("/signup")
@@ -146,40 +153,42 @@ export default function Header({user}: { user: User | null }) {
                 <div className={"w-fit"}>
                     <Logo/>
                 </div>
+                {user?.id && (
+                    <div>
+                        <Popover open={mobilePopOver}>
+                            <PopoverTrigger>
+                                <Button onClick={() => {
+                                    setMobilePopOver(prev => !prev)
+                                }} size={"lg"}
+                                        className={"bg-[#4A6CF7]/30 px-2 rounded active:scale-[0.98] hover:bg-[#4A6CF7]/70"}
 
-                <div>
-                    <Popover open={mobilePopOver}>
-                        <PopoverTrigger>
-                            <Button onClick={() => {
-                                setMobilePopOver(prev => !prev)
-                            }} size={"lg"}
-                                    className={"bg-[#4A6CF7]/30 px-2 rounded active:scale-[0.98] hover:bg-[#4A6CF7]/70"}
-
-                                    variant={"default"}>
+                                        variant={"default"}>
                                                 <span className={"hidden md:block"}>
                                                        {user?.name}
                                                 </span>
 
-                                <CiUser size={30}/>
-                            </Button>
-                        </PopoverTrigger>
-                        <PopoverContent
-                            className={"w-[200px] rounded-none shadow-none py-0 px-0 text-sm"}>
-                            <ul className={"flex flex-col "}>
-                                {Object.entries(accountLinks).map(([key, value]) => {
-                                    return (
-                                        <Link onClick={() => {
-                                            setPopOver(false)
-                                        }} key={key} href={`/pool/${value.href}`}
-                                              className={"text-sm hover:bg-gray-200 font-light px-6 last:border-0 border-b    py-3 px"}>
-                                            {value.label}
-                                        </Link>
-                                    )
-                                })}
-                            </ul>
-                        </PopoverContent>
-                    </Popover>
-                </div>
+                                    <CiUser size={30}/>
+                                </Button>
+                            </PopoverTrigger>
+                            <PopoverContent
+                                className={"w-[200px] rounded-none shadow-none py-0 px-0 text-sm"}>
+                                <ul className={"flex flex-col "}>
+                                    {Object.entries(accountLinks).map(([key, value]) => {
+                                        return (
+                                            <Link onClick={() => {
+                                                setPopOver(false)
+                                            }} key={key} href={`/pool/${value.href}`}
+                                                  className={"text-sm hover:bg-gray-200 font-light px-6 last:border-0 border-b    py-3 px"}>
+                                                {value.label}
+                                            </Link>
+                                        )
+                                    })}
+                                </ul>
+                            </PopoverContent>
+                        </Popover>
+                    </div>
+
+                )}
 
             </div>
 
@@ -259,6 +268,15 @@ export default function Header({user}: { user: User | null }) {
                                                     </Link>
                                                 )
                                             })}
+
+                                            <div onClick={() => {
+                                                request("/user/logout", "DELETE", null, res => {
+                                                    router.refresh()
+                                                })
+                                            }}
+                                                 className={"text-sm text-red-500 hover:bg-gray-200 font-light px-6 last:border-0 border-b    py-3 px"}>
+                                                Log out
+                                            </div>
                                         </ul>
                                     </PopoverContent>
                                 </Popover>

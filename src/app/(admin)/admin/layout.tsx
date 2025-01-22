@@ -29,6 +29,12 @@ export default async function Layout({children}: { children: ReactNode }) {
                                 <span className="flex-1 ms-3 whitespace-nowrap">Worker</span>
                             </Link>
                         </li>
+                        <li>
+                            <Link href={"/admin/earning"}
+                                  className="flex items-center p-2 text-white rounded-lg dark:text-white hover:text-black hover:bg-gray-100 group">
+                                <span className="flex-1 ms-3 whitespace-nowrap">Earning</span>
+                            </Link>
+                        </li>
                     </ul>
                 </div>
             </aside>

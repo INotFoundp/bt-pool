@@ -1,8 +1,8 @@
 import {CarouselItem} from "@/components/ui/carousel";
 import CoinTable from "@/components/tables/CoinTable";
 import axios from "axios";
-import Image from "next/image";
 import {Button} from "@/components/ui/button";
+import Image from "next/image";
 
 export default async function Home() {
 
@@ -62,6 +62,64 @@ export default async function Home() {
 
     ];
 
+    const fitureCard = {
+        one: {
+            image: "1.svg",
+            content: "Real and transparent mining data, advanced FPPS revenue model, powerful settlement center, punctual payment, rain or shine",
+            title: "Revenue Assurance"
+        },
+        two: {
+            image: "2.svg",
+            content: "Concise app and webpage operation, easy account registration with cell-phone number or email, independent alarm function, revenue address, miners grouping and watcher link of sharing data.",
+            title: "Convenient Management"
+        },
+        three: {
+            image: "3.svg",
+            content: "Open source code, free management software of miners and mining farm, official customized overclock firmware increases revenue significantly, blockchain data and technical service provider.",
+            title: "Leading Technology"
+        },
+    }
+
+
+    const sec2 = {
+        one: {
+            title: "Convenient Managemen",
+            image: "sec2-1",
+            list: [
+                "egister with Mailbox",
+                " Authorize shared",
+                " Have an sub-account",
+                " Convenient management"
+            ]
+        }, two: {
+            title: "Transparent Earnings",
+            image: "sec2-2",
+            list: [
+                "Full Pay Per Share (FPPS)",
+                "Pay-Per-Share (PPS)",
+                " Pay-Per-Last-N-Shares (PPLNS)",
+                " Solo mining implies that a single miner."
+            ]
+        }, three: {
+            title: "Promt Notice",
+            image: "sec2-3",
+            list: [
+                "Support Hash warning",
+                "Get notifications from Mail",
+                "You can set a warning to SMS",
+                "Get notification on WhatsApp Application"
+            ]
+        }, four: {
+            title: "Stable Service",
+            image: "sec2-4",
+            list: [
+                "Top technical team",
+                "Support million miners",
+                "Stable Network",
+                "Crypto loans available 24/7"
+            ]
+        },
+    }
 
     const CarouseItems = () => {
 
@@ -119,25 +177,7 @@ export default async function Home() {
                       </linearGradient>
                   </defs>
               </svg>
-              <svg className={"absolute -bottom-20 -left-48"} width="1469" height="498" viewBox="0 0 1469 498"
-                   fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g opacity="0.3" filter="url(#filter0_f_201_2182)">
-                      <rect y="450" width="1019" height="261" fill="url(#paint0_linear_201_2182)"></rect>
-                  </g>
-                  <defs>
-                      <filter id="filter0_f_201_2182" x="-450" y="0" width="1919" height="1161"
-                              filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                          <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
-                          <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
-                          <feGaussianBlur stdDeviation="225" result="effect1_foregroundBlur_201_2182"></feGaussianBlur>
-                      </filter>
-                      <linearGradient id="paint0_linear_201_2182" x1="-94.7239" y1="501.47" x2="-65.8058" y2="802.2"
-                                      gradientUnits="userSpaceOnUse">
-                          <stop stopColor="#ABBCFF"></stop>
-                          <stop offset="0.859375" stopColor="#4A6CF7"></stop>
-                      </linearGradient>
-                  </defs>
-              </svg>
+
               <div className={"z-40 pt-32 md:pt-0 gap-6 md:gap-0 flex items-center flex-col md:flex-row container mx-auto text-white h-full px-6"}>
                   <div className={"w-full flex flex-col gap-6"}>
                       <div className={"flex flex-col gap-2 text-4xl font-bold "}>
@@ -188,59 +228,62 @@ export default async function Home() {
               </div>
 
               <div className={"flex md:gap-24 flex-col gap-10 md:flex-row items-center justify-center"}>
-                  {Array.from({length: 3}).map((item, index) => (
-                      <div key={index}
-                           className={"w-[360px] flex flex-col justify-between py-10 px-5 bg-white h-[480px]"}>
-                          <div className={"w-full flex justify-center"}>
-                              <img src="/images/icon/1.svg" alt="1"/>
-                          </div>
-
-                          <div className={"flex flex-col gap-4 items-center"}>
-                              <div>
-                                  <h5 className={"text-lg"}>Brand Strength</h5>
+                  {Object.entries(fitureCard).map(([key, value]) => {
+                      let {content, image, title} = value;
+                      return (
+                          <div key={key}
+                               className={"w-[360px] flex flex-col justify-between py-10 px-5 bg-white h-[480px]"}>
+                              <div className={"w-full flex justify-center"}>
+                                  <img className={"w-[200px]"} src={`/images/icon/${image}`} alt="1"/>
                               </div>
 
-                              <div>
-                                  <p className={"text-center text-sm text-zinc-400 leading-7"}>
-                                      The world's top all-inclusive mining pool
-                                      Global services in 150+ countries/regions
-                                      Covering over 1 million users worldwide
-                                      Multi-billion dollar worth of cumulative mining output value
-                                  </p>
-                              </div>
-                          </div>
+                              <div className={"flex flex-col gap-4 items-center"}>
+                                  <div>
+                                      <h5 className={"text-lg"}>{title}</h5>
+                                  </div>
 
-                      </div>
-                  ))}
+                                  <div>
+                                      <p className={"text-center text-sm text-zinc-400 leading-7"}>
+                                          {content}
+                                      </p>
+                                  </div>
+                              </div>
+
+                          </div>
+                      )
+                  })}
 
               </div>
           </section>
           <section className={"min-h-[50dhv]  md:h-fit flex flex-col gap-12 py-[60px] w-full bg-gray-100"}>
               <div className={"w-full flex justify-center"}>
-                  <h2 className={"text-4xl font-semibold"}>One-Stop Mining Services, All in BT COIN</h2>
+                  <h2 className={"md:text-4xl text-xl font-semibold"}>Why Choose BT POOL!?</h2>
               </div>
 
 
-              <div className={"flex flex-col md:flex-row justify-center gap-24"}>
+              <div className={"flex flex-col px-8 items-center md:flex-row justify-center gap-24"}>
 
-                  {Array.from({length : 4}).map((item, index) => (
-                      <div className={" flex flex-col  gap-4"}>
-                          <div className={"pl-4"}>
-                              <Image width={50} height={50} src={"/images/icon/sec2.png"} alt={"sec2"}/>
+                  {Object.entries(sec2).map(([key, value]) => {
+                      let {image, list, title} = value;
+                      return (
+                          <div className={" flex flex-col w-full gap-4"}>
+                              <div className={"pl-4 w-full flex justify-center md:justify-normal"}>
+                                  <Image width={50} height={50} src={`/images/icon/${image}.png`} alt={"sec2"}/>
+                              </div>
+                              <div className={"pl-4 w-full text-center py-2"}>
+                                  <h4 className={"text-lg"}>{title}</h4>
+                              </div>
+                              <div className={"flex flex-col gap-4"}>
+                                  {list.map(item => (
+                                      <div className={"flex gap-2 text-sm text-zinc-500 items-center"}>
+                                          <span className={"w-1.5 rounded-full bg-green-500 h-1.5"}></span>
+                                          <p>{item}</p>
+                                      </div>
+                                  ))}
+                              </div>
                           </div>
-                          <div className={"pl-4 py-2"}>
-                              <h4 className={"text-lg"}>Mining Management</h4>
-                          </div>
-                          <div className={"flex flex-col gap-4"}>
-                              {Array.from({length: 4}).map(item => (
-                                  <div className={"flex gap-2 text-sm text-zinc-500 items-center"}>
-                                      <span className={"w-1.5 rounded-full bg-[rgb(5,205,205)] h-1.5"}></span>
-                                      <p>View mining profit in a click</p>
-                                  </div>
-                              ))}
-                          </div>
-                      </div>
-                  ))}
+                      )
+                  })}
 
 
               </div>

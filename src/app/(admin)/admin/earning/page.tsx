@@ -6,17 +6,20 @@ import {FaSearch} from "react-icons/fa";
 import {Button} from "@/components/ui/button";
 import getUserFromCookie from "@/backend/tools/getUser";
 import {revalidatePath} from "next/cache";
-import {$Enums, Worker} from "@prisma/client";
+import {Profit} from "@prisma/client";
 import {redirect} from "next/navigation";
 
 
-type WorkerPayload = {
-    minut_profit: string
-    hour_profit: string
-    rejected_rate: string
-    last_submit: string
+type EarningPayload = {
+    hashrat: string
+    total_profit: string
+    unit_output: string
+    coin_price: string
+    usd_total_profit: string
+    psp_profit: string
+    pplns_profit: string
+    solo_profit: string,
     user: string
-    status: $Enums.WorkerStatus
 }
 
 export default async function Page({
@@ -36,29 +39,37 @@ export default async function Page({
     const user = await getUserFromCookie()
 
     const workerForm: FormType[] = [
-        {label: "minut_profit", key: "minut_profit", type: "number"},
-        {label: "hour_profit", key: "hour_profit", type: "number"},
-        {label: "rejected_rate", key: "rejected_rate", type: "number"},
-        {label: "last_submit", key: "last_submit", type: "date"},
+        {label: "hashrat", key: "hashrat", type: "text"},
+        {label: "total_profit", key: "total_profit", type: "number"},
+        {label: "unit_output", key: "unit_output", type: "number"},
+        {label: "coin_price", key: "coin_price", type: "number"},
+        {label: "usd_total_profit", key: "usd_total_profit", type: "number"},
+        {label: "psp_profit", key: "psp_profit", type: "number"},
+        {label: "pplns_profit", key: "pplns_profit", type: "number"},
+        {label: "solo_profit", key: "solo_profit", type: "number"},
     ]
 
+    let profits: Profit[] = []
     const users = await prisma.user.findMany()
 
-    async function addWorker(formData: FormData) {
+    async function addProfit(formData: FormData) {
         "use server"
 
 
-        const values = Object.fromEntries(formData) as WorkerPayload
+        const values = Object?.fromEntries(formData) as EarningPayload
 
         try {
-            const worker = await prisma.worker.create({
+            const earning = await prisma.profit.create({
                 data: {
-                    minut_profit: +values.minut_profit,
-                    rejected_rate: +values.rejected_rate,
-                    hour_profit: +values?.hour_profit,
+                    hashrat: values?.hashrat,
+                    pplns_profit: +values?.pplns_profit,
+                    solo_profit: +values.solo_profit,
+                    psp_profit: +values.psp_profit,
+                    total_profit: +values.total_profit,
+                    unit_output: +values.unit_output,
+                    coin_price: +values?.coin_price,
                     user_id: values?.user,
-                    status: values?.status,
-                    last_submit: new Date(values?.last_submit).toISOString()
+                    usd_total_profit: +values?.usd_total_profit
                 }
             })
 
@@ -70,15 +81,16 @@ export default async function Page({
         }
     }
 
-    async function deleteWorker(id: string) {
+    async function deleteProfit(id: string) {
         "use server"
 
+
         try {
-            await prisma.worker.delete({
-                where: {
-                    id
-                }
-            })
+           await prisma.profit.delete({
+               where : {
+                   id : id
+               }
+           })
 
             revalidatePath("./")
         } catch (e) {
@@ -86,11 +98,10 @@ export default async function Page({
         }
     }
 
-    let workers: Worker[] = []
 
 
     if (id) {
-        workers = await prisma.worker.findMany({
+        profits = await prisma.profit.findMany({
             where: {
                 user_id: id
             }
@@ -101,12 +112,12 @@ export default async function Page({
         <div className={"flex flex-col gap-6"}>
             <div>
                 <div className={"text-xl font-semibold"}>
-                    <h4>Workers</h4>
+                    <h4>Earnings</h4>
                 </div>
             </div>
             <hr/>
             <div>
-                <form action={addWorker} className={"flex flex-col gap-6"}>
+                <form action={addProfit} className={"flex flex-col gap-6"}>
                     <div className={"flex gap-2"}>
                         <label htmlFor="user">user :</label>
                         <select className={"border px-2 py-1 rounded-md"} name="user" id="user">
@@ -130,15 +141,6 @@ export default async function Page({
                         )
                     })}
 
-                    <div className={"flex gap-2"}>
-                        <label htmlFor="user">Status :</label>
-                        <select defaultValue={"INACTIVE"} className={"border px-2 py-1 rounded-md"} name="status"
-                                id="user">
-                            <option value="INACTIVE">In Active</option>
-                            <option value="ACTIVE">Active</option>
-                            <option value="OFFLINE">Offline</option>
-                        </select>
-                    </div>
 
                     <Button className={"w-24"}>
                         Submit
@@ -148,14 +150,15 @@ export default async function Page({
                 <div>
                     <div className={"mb-6 flex flex-col gap-2 "}>
                         <h5 className={"text-2xl   font-semibold"}>List </h5>
-                        <form className={"flex gap-2 "} action={ async (formData) => {
+                        <form className={"flex gap-2 "} action={async (formData) => {
                             "use server"
                             const values = Object.fromEntries(formData) as { user: string }
 
-                            return redirect(`/admin/worker?id=${values.user}`)
+                            return redirect(`/admin/earning?id=${values.user}`)
 
                         }}>
-                            <select defaultValue={id ?? ""} className={"border px-2 py-1 rounded-md"} name="user" id="user">
+                            <select defaultValue={id ?? ""} className={"border px-2 py-1 rounded-md"} name="user"
+                                    id="user">
                                 {users?.map(user => {
                                     return (
                                         <option key={user?.id} value={user?.id}>{user?.name}</option>
@@ -168,7 +171,7 @@ export default async function Page({
                             </Button>
                         </form>
                     </div>
-                    {!!workers?.length ? (
+                    {!!profits?.length ? (
                         <div className="relative overflow-x-auto">
                             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                 <thead
@@ -176,22 +179,31 @@ export default async function Page({
                                 <tr>
 
                                     <th scope="col" className="px-6 py-3">
-                                        nurmic_id
+                                        created_at
                                     </th>
                                     <th scope="col" className="px-6 py-3">
-                                        status
+                                        hashrat
                                     </th>
                                     <th scope="col" className="px-6 py-3">
-                                        minut_profit
+                                        total_profit
                                     </th>
                                     <th scope="col" className="px-6 py-3">
-                                        hour_profit
+                                        unit_output
                                     </th>
                                     <th scope="col" className="px-6 py-3">
-                                        rejected_rate
+                                        coin_price
                                     </th>
                                     <th scope="col" className="px-6 py-3">
-                                        last_submit
+                                        usd_total_profit
+                                    </th>
+                                    <th scope="col" className="px-6 py-3">
+                                        psp_profit
+                                    </th>
+                                    <th scope="col" className="px-6 py-3">
+                                        pplns_profit
+                                    </th>
+                                    <th scope="col" className="px-6 py-3">
+                                        solo_profit
                                     </th>
                                     <th scope="col" className="px-6 py-3">
                                         options
@@ -199,46 +211,59 @@ export default async function Page({
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {workers?.map(worker => {
+                                {profits?.map(profit => {
                                     const {
-                                        id,
-                                        status,
-                                        minut_profit,
-                                        hour_profit,
-                                        last_submit,
-                                        rejected_rate,
-                                        nurmic_id
-                                    } = worker
+                                        id : profit_id,
+                                        created_at,
+                                        hashrat,
+                                        total_profit,
+                                        unit_output,
+                                        coin_price,
+                                        usd_total_profit,
+                                        psp_profit,
+                                        pplns_profit,
+                                        solo_profit,
+                                    } = profit
                                     return (
                                         <tr key={id}
                                             className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                             <th scope="row"
                                                 className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                {nurmic_id}
+                                                {new Date(created_at).toLocaleDateString()}
                                             </th>
                                             <td className="px-6 py-4">
-                                                {status}
+                                                {hashrat}
                                             </td>
                                             <td className="px-6 py-4">
-                                                {minut_profit}
+                                                {total_profit}
                                             </td>
                                             <td className="px-6 py-4">
-                                                {hour_profit}
-                                            </td>
-
-                                            <td className="px-6 py-4">
-                                                {rejected_rate}
+                                                {unit_output}
                                             </td>
 
                                             <td className="px-6 py-4">
-                                                {new Date(last_submit).toLocaleDateString()}
+                                                {coin_price}
+                                            </td>
+
+                                            <td className="px-6 py-4">
+                                                {usd_total_profit}
+                                            </td>
+
+                                            <td className="px-6 py-4">
+                                                {psp_profit}
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                {pplns_profit}
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                {solo_profit}
                                             </td>
 
                                             <td className="px-6 py-4">
                                                 <Button onClick={async () => {
                                                     "use server"
 
-                                                    await deleteWorker(id)
+                                                    await deleteProfit(profit_id)
                                                 }} className={"bg-red-500"}
                                                         color={"red"}>Delete</Button>
                                             </td>
