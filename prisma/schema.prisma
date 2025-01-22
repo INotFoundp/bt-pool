@@ -58,6 +58,7 @@ model Worker {
   rejected_rate Int
   last_submit   DateTime
   user_id       String
+  first_submit  DateTime
   user          User         @relation(fields: [user_id], onUpdate: Cascade, onDelete: Cascade, references: [id])
 }
 

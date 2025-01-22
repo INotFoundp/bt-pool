@@ -156,6 +156,9 @@ export default function Page() {
                                                 Last Submit
                                             </th>
                                             <th scope="col" className="px-6 text-xs w-1/6 py-3">
+                                                First Submit
+                                            </th>
+                                            <th scope="col" className="px-6 text-xs w-1/6 py-3">
                                                 Status
                                             </th>
 
@@ -171,8 +174,11 @@ export default function Page() {
                                                 hour_profit,
                                                 minut_profit,
                                                 nurmic_id,
-                                                rejected_rate
+                                                rejected_rate,
+                                                first_submit
                                             } = worker
+
+                                            console.log(last_submit)
                                             return (
                                                 <tr className=" z-40   text-white bg-[#282936]/50 last:border-0 border-b dark:border-gray-700">
                                                     <th scope="row"
@@ -190,6 +196,9 @@ export default function Page() {
                                                     </td>
                                                     <td className="px-6 py-4">
                                                         {new Date(last_submit).toLocaleDateString()}
+                                                    </td>
+                                                    <td className="px-6 py-4">
+                                                        {new Date(first_submit).toLocaleDateString()}
                                                     </td>
                                                     <td style={{color : stats_color[status as keyof typeof stats_color]}} className="px-6 py-4">
                                                         {status}

@@ -15,6 +15,7 @@ type WorkerPayload = {
     hour_profit: string
     rejected_rate: string
     last_submit: string
+    first_submit: string
     user: string
     status: $Enums.WorkerStatus
 }
@@ -40,6 +41,7 @@ export default async function Page({
         {label: "hour_profit", key: "hour_profit", type: "number"},
         {label: "rejected_rate", key: "rejected_rate", type: "number"},
         {label: "last_submit", key: "last_submit", type: "date"},
+        {label: "first_submit", key: "first_submit", type: "date"},
     ]
 
     const users = await prisma.user.findMany()
@@ -58,7 +60,9 @@ export default async function Page({
                     hour_profit: +values?.hour_profit,
                     user_id: values?.user,
                     status: values?.status,
-                    last_submit: new Date(values?.last_submit).toISOString()
+                    last_submit: new Date(values?.last_submit).toISOString(),
+                    first_submit: new Date(values?.first_submit).toISOString(),
+
                 }
             })
 
@@ -194,6 +198,9 @@ export default async function Page({
                                         last_submit
                                     </th>
                                     <th scope="col" className="px-6 py-3">
+                                        first_submit
+                                    </th>
+                                    <th scope="col" className="px-6 py-3">
                                         options
                                     </th>
                                 </tr>
@@ -207,7 +214,8 @@ export default async function Page({
                                         hour_profit,
                                         last_submit,
                                         rejected_rate,
-                                        nurmic_id
+                                        nurmic_id,
+                                        first_submit
                                     } = worker
                                     return (
                                         <tr key={id}
@@ -232,6 +240,9 @@ export default async function Page({
 
                                             <td className="px-6 py-4">
                                                 {new Date(last_submit).toLocaleDateString()}
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                {new Date(first_submit).toLocaleDateString()}
                                             </td>
 
                                             <td className="px-6 py-4">
