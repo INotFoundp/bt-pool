@@ -3,6 +3,8 @@ import CoinTable from "@/components/tables/CoinTable";
 import axios from "axios";
 import {Button} from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
+import getUserFromCookie from "@/backend/tools/getUser";
 
 export default async function Home() {
 
@@ -153,6 +155,9 @@ export default async function Home() {
         "Announcement on Winner List of Holiday Seas...",
     ];
 
+
+    const user = await getUserFromCookie()
+
   return (
       <div className={"flex flex-col gap-0 md:gap-12"}>
           <section className={"w-full overflow-hidden left-0 flex items-center  relative bg-[#121212] h-screen max-h-[1080px] min-h-[600px]"}>
@@ -200,9 +205,12 @@ export default async function Home() {
 
                       </div>
                       <div>
-                          <Button size={"lg"}  className={"bg-[#4A6CF7] active:scale-[0.98] hover:bg-[#4A6CF7]/70"}>
-                              Get Started {"->"}
-                          </Button>
+                          <Link href={user?.id ? "/pool" : "/login"}>
+                              <Button size={"lg"} className={"bg-[#4A6CF7] active:scale-[0.98] hover:bg-[#4A6CF7]/70"}>
+                                  Get Started {"->"}
+                              </Button>
+                          </Link>
+
                       </div>
                   </div>
 

@@ -1,4 +1,5 @@
 import win from "@/utils/window";
+import toast from "react-hot-toast";
 
 
 export default function request(
@@ -9,7 +10,7 @@ export default function request(
 
     },
     error = (res: any) => {
-        alert(res.data.message)
+        toast.error(res?.data?.message)
     }) {
     const promise = fetch('/api' + path, {
         method,

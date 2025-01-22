@@ -98,7 +98,7 @@ export default function Header({user}: { user: User | null }) {
                                 return (
                                     <div key={href} className={"text-white border-b last:border-0 w-full p-3"}>
                                         <Link href={`/${href}`}>
-                                            {href}
+                                            {label}
                                         </Link>
                                     </div>
                                 )
@@ -183,6 +183,15 @@ export default function Header({user}: { user: User | null }) {
                                             </Link>
                                         )
                                     })}
+
+                                    <div onClick={() => {
+                                        request("/user/logout", "DELETE", null, res => {
+                                            router.refresh()
+                                        })
+                                    }}
+                                         className={"text-sm text-red-500 hover:bg-gray-200 font-light px-6 last:border-0 border-b    py-3 px"}>
+                                        Log out
+                                    </div>
                                 </ul>
                             </PopoverContent>
                         </Popover>

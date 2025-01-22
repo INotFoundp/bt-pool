@@ -85,9 +85,9 @@ export default function Page() {
         },
     ];
 
-    const renderActiveShape = (props: any) => {
+    const renderActiveShape = (props) => {
         const RADIAN = Math.PI / 180;
-        const {cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value} = props;
+        const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value } = props;
         const sin = Math.sin(-RADIAN * midAngle);
         const cos = Math.cos(-RADIAN * midAngle);
         const sx = cx + (outerRadius + 10) * cos;
@@ -121,10 +121,9 @@ export default function Page() {
                     outerRadius={outerRadius + 10}
                     fill={fill}
                 />
-                <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={"black"} fill="none"/>
-                <circle cx={ex} cy={ey} r={2} fill={"black"} stroke="none"/>
-                <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor}
-                      fill="#333">{`PV ${value}`}</text>
+                <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
+                <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
+                <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`PV ${value}`}</text>
                 <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
                     {`(Rate ${(percent * 100).toFixed(2)}%)`}
                 </text>
@@ -155,6 +154,8 @@ export default function Page() {
         daily_hashrate, balance, hsashrate, hour_hashrate, last_profit, total_earning, worker
     } = poolData ?? {}
 
+
+    console.log(worker)
 
     if (loading) return <Loader/>
 
@@ -196,27 +197,28 @@ export default function Page() {
     }
 
     const workers = {
-        all: {
-            label: "All",
-            count: worker?.length,
-            color: "gray"
+        active: {
+            label: "Active",
+            count: filterAndGetLength(worker as Worker[], "ACTIVE"),
+            color: "green"
+
+        },
+        offline: {
+            label: "Offline",
+            count: filterAndGetLength(worker, "OFFLINE"),
+            color: "red"
         },
         inactive: {
             label: "In Active",
             count: filterAndGetLength(worker as Worker[], "INACTIVE"),
             color: "orange"
         },
-        active: {
-            label: "Active",
-            count: filterAndGetLength(worker as Worker[], "ACTIVE"),
-            color: "green"
 
-        }
     }
 
     const data = [
-        {name: 'All', value: workers.all.count ?? 1},
         {name: 'Active', value: workers.active.count ?? 0},
+        {name: 'offline', value: workers.offline.count ?? 0},
         {name: 'In Active', value: workers.inactive.count ?? 0},
 
     ];
@@ -278,10 +280,11 @@ export default function Page() {
                                     activeShape={renderActiveShape}
                                     data={data}
                                     cx="50%"
+
                                     cy="50%"
                                     innerRadius={60}
                                     outerRadius={80}
-                                    fill="#8884d8"
+                                    fill={"#EEA11B"}
                                     dataKey="value"
                                 />
                             </PieChart>
@@ -289,6 +292,19 @@ export default function Page() {
                         </ResponsiveContainer>
 
                         <div className={"w-[40%] flex justify-center flex-col gap-3"}>
+
+                            <div className={"w-full flex items-center  "}>
+                                <div style={{background: "white"}} className={`w-3 h-3 rounded mr-2 `}></div>
+                                <div className={"text-sm flex gap-2"}>
+                                            <span className={"text-white"}>
+                                            {worker?.length}
+                                            </span>
+                                    <span className={" text-[#79808A]"}>
+                                             {"All"}
+                                            </span>
+                                </div>
+                            </div>
+
                             {Object.entries(workers).map(([key, value]) => {
                                 let {count, label, color} = value;
 

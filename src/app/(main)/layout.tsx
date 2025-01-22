@@ -2,6 +2,8 @@ import "./globals.css";
 import Header from "@/components/theme/Header";
 import Footer from "@/components/theme/Footer";
 import getUserFromCookie from "@/backend/tools/getUser";
+import {Toaster} from "react-hot-toast";
+import React from "react";
 
 
 export default async function RootLayout({
@@ -19,6 +21,9 @@ export default async function RootLayout({
       <body className={`antialiased`}>
 
       <Header user={data}/>
+      <Toaster toastOptions={{
+          position : "bottom-left"
+      }}  />
       <main className={"w-ful  bg-[#121212] "}>
           {children}
       </main>

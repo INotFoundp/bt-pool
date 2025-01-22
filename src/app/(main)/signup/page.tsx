@@ -197,7 +197,7 @@ export default function Layout() {
                             }}
                             className="w-full bg-[#05CDCD] hover:bg-blue-600 text-white font-medium py-2 rounded-md"
                         >
-                            Sign in
+                            Sign Up
                         </button>
 
                     </div>

@@ -59,9 +59,7 @@ const CoinTable = ({ coins } : {coins : any}) => {
                                 <td className="p-4 text-black font-semibold  text-sm md:text-lg">{779.60}</td>
                                 <td className="p-4 text-black font-semibold  text-sm md:text-lg">{1190319}</td>
                                 <td className="p-4 text-black font-semibold  text-sm md:text-lg">{"110.45T"}</td>
-                                <td className="p-4 text-black font-semibold  text-sm md:text-lg">
-                                    <button className="text-blue-500 hover:underline">Guide</button>
-                                </td>
+
                             </tr>
                         )
                     }

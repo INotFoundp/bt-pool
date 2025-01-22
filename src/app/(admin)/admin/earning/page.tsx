@@ -19,7 +19,8 @@ type EarningPayload = {
     psp_profit: string
     pplns_profit: string
     solo_profit: string,
-    user: string
+    user: string,
+    created_at: string
 }
 
 export default async function Page({
@@ -47,6 +48,7 @@ export default async function Page({
         {label: "psp_profit", key: "psp_profit", type: "number"},
         {label: "pplns_profit", key: "pplns_profit", type: "number"},
         {label: "solo_profit", key: "solo_profit", type: "number"},
+
     ]
 
     let profits: Profit[] = []
@@ -57,6 +59,8 @@ export default async function Page({
 
 
         const values = Object?.fromEntries(formData) as EarningPayload
+
+        const date = new Date(values?.created_at).toISOString()
 
         try {
             const earning = await prisma.profit.create({
@@ -69,7 +73,8 @@ export default async function Page({
                     unit_output: +values.unit_output,
                     coin_price: +values?.coin_price,
                     user_id: values?.user,
-                    usd_total_profit: +values?.usd_total_profit
+                    usd_total_profit: +values?.usd_total_profit,
+                    created_at : date
                 }
             })
 
@@ -136,11 +141,20 @@ export default async function Page({
                                 <label className={"w-2/5"} htmlFor={key}>
                                     {label} :
                                 </label>
-                                <Input required={true} placeholder={label} name={key} type={type}/>
+                                <Input min={0} max={2} step={"0.0000000001"} required={true} placeholder={label}
+                                       name={key} type={type}/>
                             </div>
                         )
                     })}
 
+                    <div className={"w-full flex gap-2 md:w-1/3"}>
+                        <label className={"w-2/5"} htmlFor={"created_at"}>
+                            {"created_at"} :
+                        </label>
+                        <Input min={0} max={2} step={"0.0000000001"} required={true} placeholder={"date"}
+                               name={"created_at"}
+                               type={"date"}/>
+                    </div>
 
                     <Button className={"w-24"}>
                         Submit
