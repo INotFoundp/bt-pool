@@ -1,6 +1,7 @@
 "use client";
 
 import {useEffect, useState} from "react";
+import HOST from "@/server/host";
 
 
 interface data {
@@ -26,7 +27,7 @@ export default function useGetData<T = any>(path: string) {
             success: false,
         })
 
-        const promise: Promise<Response> = fetch(`/api/${path}`, {
+        const promise: Promise<Response> = fetch(`${HOST}/api/${path}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

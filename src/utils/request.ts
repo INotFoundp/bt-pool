@@ -1,5 +1,6 @@
 import win from "@/utils/window";
 import toast from "react-hot-toast";
+import HOST from "@/server/host";
 
 
 export default function request(
@@ -12,7 +13,7 @@ export default function request(
     error = (res: any) => {
         toast.error(res?.data?.message)
     }) {
-    const promise = fetch('/api' + path, {
+    const promise = fetch(`${HOST}/api` + path, {
         method,
         ...(!!body && ({body: body instanceof FormData ? body : JSON.stringify(body)})),
     })
