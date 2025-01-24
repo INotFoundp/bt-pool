@@ -348,7 +348,7 @@ export default function Page() {
                 </StatsCard>
             </div>
             <div>
-                <StatsCard className={"w-full h-fit "} title={"Hashrate."}>
+                <StatsCard className={"w-full h-fit "} title={"Hashrate"} topButtonTitle={'Download File'}>
 
 
                     <div className={"mb-12"}>

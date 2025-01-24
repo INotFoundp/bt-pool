@@ -72,7 +72,7 @@ export default function Page() {
         <div className={"flex flex-col gap-8"}>
 
             <div>
-                <StatsCard className={"w-full h-fit  "} title={"Hashrate."}>
+                <StatsCard topButtonTitle={'Download File'} className={"w-full h-fit "} title={"Hashrate"}>
 
 
                     <div className={"mb-12"}>

@@ -15,7 +15,7 @@ const AboutUs = () => {
                     <div className="flex flex-col items-center">
                         <div className="w-24 h-24 rounded-full mb-4">
                             <img
-                                src="https://images.unsplash.com/photo-1505751172444-590e4ed6f370"
+                                src="/images/about/vision.jpg"
                                 alt="Vision"
                                 className="w-full h-full object-cover rounded-full"
                             />
@@ -29,7 +29,7 @@ const AboutUs = () => {
                     <div className="flex flex-col items-center">
                         <div className="w-24 h-24 rounded-full mb-4">
                             <img
-                                src="https://images.unsplash.com/photo-1505775030261-6e97f46b2493"
+                                src="/images/about/mission.jpg"
                                 alt="Mission"
                                 className="w-full h-full object-cover rounded-full"
                             />
@@ -43,7 +43,7 @@ const AboutUs = () => {
                     <div className="flex flex-col items-center">
                         <div className="w-24 h-24 rounded-full mb-4">
                             <img
-                                src="https://images.unsplash.com/photo-1509885005099-819dd3fa9e8f"
+                                src="/images/about/core.jpeg"
                                 alt="Core Values"
                                 className="w-full h-full object-cover rounded-full"
                             />
@@ -65,7 +65,7 @@ const AboutUs = () => {
                         <div className="text-center">
                             <div className="w-32 h-32 rounded-full mx-auto bg-gray-200 mb-4">
                                 <img
-                                    src="https://images.unsplash.com/photo-1541720872-fbd106f5b7b6"
+                                    src="/images/team/1.jpeg"
                                     alt="John Doe"
                                     className="w-full h-full object-cover rounded-full"
                                 />
@@ -79,7 +79,7 @@ const AboutUs = () => {
                         <div className="text-center">
                             <div className="w-32 h-32 rounded-full mx-auto bg-gray-200 mb-4">
                                 <img
-                                    src="https://images.unsplash.com/photo-1542744095-9606f11c7467"
+                                    src="/images/team/2.jpg"
                                     alt="Jane Smith"
                                     className="w-full h-full object-cover rounded-full"
                                 />
@@ -93,7 +93,7 @@ const AboutUs = () => {
                         <div className="text-center">
                             <div className="w-32 h-32 rounded-full mx-auto bg-gray-200 mb-4">
                                 <img
-                                    src="https://images.unsplash.com/photo-1502544432731-c5b505357b9f"
+                                    src="/images/team/3.jpeg"
                                     alt="Michael Brown"
                                     className="w-full h-full object-cover rounded-full"
                                 />
@@ -117,7 +117,7 @@ const AboutUs = () => {
                         <div className="text-center">
                             <div className="w-32 h-32 rounded-full mx-auto bg-gray-200 mb-4">
                                 <img
-                                    src="https://images.unsplash.com/photo-1526743442029-15b9bafdb48e"
+                                    src="/images/about/mining.png"
                                     alt="Algorithms"
                                     className="w-full h-full object-cover rounded-full"
                                 />
@@ -130,7 +130,7 @@ const AboutUs = () => {
                         <div className="text-center">
                             <div className="w-32 h-32 rounded-full mx-auto bg-gray-200 mb-4">
                                 <img
-                                    src="https://images.unsplash.com/photo-1574158622689-8d7c149b1597"
+                                    src="/images/about/scalable.jpeg"
                                     alt="Infrastructure"
                                     className="w-full h-full object-cover rounded-full"
                                 />
@@ -143,7 +143,7 @@ const AboutUs = () => {
                         <div className="text-center">
                             <div className="w-32 h-32 rounded-full mx-auto bg-gray-200 mb-4">
                                 <img
-                                    src="https://images.unsplash.com/photo-1587481287747-d075b7c10b4b"
+                                    src="/images/about/blockchain.jpeg"
                                     alt="Security"
                                     className="w-full h-full object-cover rounded-full"
                                 />
@@ -163,23 +163,23 @@ const AboutUs = () => {
                         We are proud to collaborate with leading organizations in the blockchain and tech industries. These partnerships strengthen our platform and help us deliver the best services to our users.
                     </p>
                     <div className="mt-12 flex justify-center space-x-12">
-                        <div className="w-32 h-32 bg-gray-200 rounded-md">
+                        <div className="w-32 h-32 bg-gray-200 rounded-full p-7">
                             <img
-                                src="https://images.unsplash.com/photo-1556740749-887f6717d7e4"
+                                src="/images/logo/doge.png"
                                 alt="Partner 1"
                                 className="w-full h-full object-cover rounded-md"
                             />
                         </div>
-                        <div className="w-32 h-32 bg-gray-200 rounded-md">
+                        <div className="w-32 h-32 bg-gray-200 rounded-full p-7">
                             <img
-                                src="https://images.unsplash.com/photo-1508590163041-e5686c9c5e8d"
+                                src="/images/logo/shiba.png"
                                 alt="Partner 2"
                                 className="w-full h-full object-cover rounded-md"
                             />
                         </div>
-                        <div className="w-32 h-32 bg-gray-200 rounded-md">
+                        <div className="w-32 h-32 bg-gray-200 rounded-full p-7">
                             <img
-                                src="https://images.unsplash.com/photo-1505485281164-1d407a07c658"
+                                src="/images/logo/tron.png"
                                 alt="Partner 3"
                                 className="w-full h-full object-cover rounded-md"
                             />

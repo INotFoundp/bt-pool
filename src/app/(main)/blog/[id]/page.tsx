@@ -21,11 +21,11 @@ export default function page() {
                     <br/>
 
 
-                    As a deep participant and builder in the crypto mining sector, ViaBTC delivered an impressive
+                    As a deep participant and builder in the crypto mining sector, BT-Pool delivered an impressive
                     performance in 2024. By continuously refining its mining pool technology, enhancing product and
-                    service experiences, and expanding into global markets, ViaBTC stood out in the highly competitive
+                    service experiences, and expanding into global markets, BT-Pool stood out in the highly competitive
                     market, achieving steady growth in hashrate across multiple mining pools and further solidifying its
-                    industry-leading position. Let’s revisit ViaBTC’s remarkable achievements over the past year through
+                    industry-leading position. Let’s revisit BT-Pool’s remarkable achievements over the past year through
                     this annual review.
 
 
@@ -35,12 +35,12 @@ export default function page() {
 
 
                     Total Annual Output Exceeds $3.2 Billion with Over 1.7 Million Users
-                    According to public data, ViaBTC helped miners generate approximately $3.2 billion worth of cryptos
+                    According to public data, BT-Pool helped miners generate approximately $3.2 billion worth of cryptos
                     in 2024. Among them, the Bitcoin mining pool produced over 30,000 BTC throughout the year, valued at
                     approximately $2.7 billion as of January 1, 2025, accounting for 84% of the total output.
                     Additionally, the annual merged output of LTC, DOGE, BELLS, JKC, PEP, and LKY mining was around $400
                     million, while the KAS mining pool contributed $20 million, and the BCH mining pool produced $12
-                    million. High luck values are key to earning more block rewards, and ViaBTC’s robust and
+                    million. High luck values are key to earning more block rewards, and BT-Pool’s robust and
                     professional mining pool technology provides miners with a stable and efficient mining experience,
                     ensuring consistent and reliable returns.
 

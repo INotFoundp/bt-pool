@@ -122,7 +122,7 @@ const LoginPage = () => {
 
                     <div className="mt-6 text-center">
                         <p className="text-sm text-gray-600">
-                            Do Not Have ViaBTC Account?{' '}
+                            Do Not Have BT-Pool Account?{' '}
                             <Link href="/signup" className="text-blue-500 hover:underline">
                                 Sign up
                             </Link>
@@ -132,7 +132,7 @@ const LoginPage = () => {
                 </div>
             </div>
             <footer className="mt-8 text-center text-sm text-[#79808A]">
-                Copyright © 2016 - 2025 ViaBTC
+                Copyright © 2016 - 2025 BTPool
             </footer>
         </div>
 
