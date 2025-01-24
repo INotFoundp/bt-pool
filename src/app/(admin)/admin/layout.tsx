@@ -10,7 +10,7 @@ export default async function Layout({children}: { children: ReactNode }) {
 
 
 
-    if (!user) return redirect("/admin/auth/login")
+    if (!user) return redirect("/login")
 
     if (user?.role !== "ADMIN") return redirect("/?message=Access_Denied")
 
@@ -33,6 +33,18 @@ export default async function Layout({children}: { children: ReactNode }) {
                             <Link href={"/admin/earning"}
                                   className="flex items-center p-2 text-white rounded-lg dark:text-white hover:text-black hover:bg-gray-100 group">
                                 <span className="flex-1 ms-3 whitespace-nowrap">Earning</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href={"/admin/bill"}
+                                  className="flex items-center p-2 text-white rounded-lg dark:text-white hover:text-black hover:bg-gray-100 group">
+                                <span className="flex-1 ms-3 whitespace-nowrap">Bills</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href={"/admin/btc"}
+                                  className="flex items-center p-2 text-white rounded-lg dark:text-white hover:text-black hover:bg-gray-100 group">
+                                <span className="flex-1 ms-3 whitespace-nowrap">BTC Value</span>
                             </Link>
                         </li>
                     </ul>

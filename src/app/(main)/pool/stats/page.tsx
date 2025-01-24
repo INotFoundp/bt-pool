@@ -3,14 +3,17 @@
 import StatsCard from "@/components/cards/poolDahboard/StatsCard";
 
 import {Area, AreaChart, Pie, PieChart, ResponsiveContainer, Sector, Tooltip, XAxis, YAxis} from "recharts";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Link from "next/link";
 import useGetData from "@/hooks/useGetData";
-import {Worker} from "@prisma/client";
+import {User, Worker} from "@prisma/client";
 import Loader from "@/components/theme/Loader";
 
 export default function Page() {
 
+    const [chartData, setChartData] = useState([{name: "to day", Hashrate: 0}])
+    const {data: user, loadingUser} = useGetData<User>("/user/me")
+    const {data: poolData, loading} = useGetData("/user/pool")
 
     const [activeSeg, setActiveSeg] = useState("minute")
 
@@ -131,33 +134,46 @@ export default function Page() {
         );
     };
 
+    useEffect(() => {
+        if (!loading) {
+            if (user?.email === "reza.naderkhani42@gmail.com") {
+                fetch("/data/chart.json").then(r => r.json()).then((data: any[]) => {
+
+
+                    const datas = data?.map(item => {
+                        const newHashrate = Number(item.Hashrate?.slice?.(0, -1)) ?? 0
+                        console.log(newHashrate)
+
+                        return {...item, Hashrate: newHashrate}
+                    })
+
+                    console.log(datas)
+
+                    setChartData(datas as any)
+                })
+            }
+        }
+
+
+    }, [user, loadingUser])
+
     const segmentButtons = {
-        minute: {
-            label: "10-min",
-            value: "minute"
+        all: {
+            label: "Summary",
+            value: "all"
         },
-        hour: {
-            label: "1-hour",
-            value: "hour"
-        },
-        days: {
-            label: "daily",
-            value: "Daily"
-        },
+
     }
 
 
-    const {data: poolData, loading} = useGetData("/user/pool")
 
 
     const {
-        daily_hashrate, balance, hsashrate, hour_hashrate, last_profit, total_earning, worker
+        daily_hashrate, balance, hsashrate, hour_hashrate, last_profit, total_earning, worker,
     } = poolData ?? {}
 
 
-    console.log(worker)
-
-    if (loading) return <Loader/>
+    if (loading || loadingUser) return <Loader/>
 
     const cards = {
         accountInfo: {
@@ -171,8 +187,8 @@ export default function Page() {
                 },
             },
             sub_contents: [
-                {value: total_earning, sub: "BTC", label: "Total Earnings"},
-                {value: balance, sub: "BTC", label: "Account Balance"},
+                {value: user?.btc_balace, sub: "BTC", label: "Total Earnings"},
+                {value: user?.btc_balace, sub: "BTC", label: "Account Balance"},
             ]
         },
         hash_rate: {
@@ -357,7 +373,7 @@ export default function Page() {
                             <AreaChart
                                 width={500}
                                 height={400}
-                                data={d}
+                                data={chartData}
                                 margin={{
                                     top: 10,
                                     right: 30,
@@ -370,7 +386,7 @@ export default function Page() {
                                 <XAxis dataKey="name"/>
                                 <YAxis/>
                                 <Tooltip/>
-                                <Area type="monotone" dataKey="uv" stroke="" fill="#2980b9"/>
+                                <Area type="monotone" dataKey="Hashrate" stroke="" fill="#2980b9"/>
                             </AreaChart>
                         </ResponsiveContainer>
                     </div>
@@ -394,9 +410,9 @@ export default function Page() {
                                     </span>
                                 </div>
                                 <div>
-                                    <h3 className={"text-zinc-500"}>BTC Stratum URL:</h3>
+                                    <h3 className={"text-zinc-500"}>BTC Smart Stratum URL:</h3>
                                     <span className={"text-sm"}>
-                                        stratum+tcp://btc.bt-pool.io:3333
+                                        stratum+tcp://bitcoin.bt-pool.io:3333
                                     </span>
                                 </div>
                             </div>
@@ -409,14 +425,12 @@ export default function Page() {
                         </div>
                         <div className={"w-full flex flex-col justify-between items-start"}>
                             <p className={"text-sm font-semibold text-zinc-400  leading-8"}>
-                                Create a Miner ID in the form of account name mahdidb1 or mahdidb1.workerID and any
+                                Create a Miner ID in the form of account name BT-POOL or BT-POOL.workerID and any
                                 password for it. WorkerID should consist of numbers and lowercase letters no longer than
                                 64 characters.
                             </p>
 
-                            <div className={"text-sm text-[#05CDCD] pb-3"}>
-                                <Link href={"worker"}>Add Worker {"->"} </Link>
-                            </div>
+
                         </div>
                     </div>
                 </StatsCard>
@@ -424,7 +438,7 @@ export default function Page() {
                     <div className={"flex flex-col gap-4"}>
                         <div className={"flex justify-between text-sm items-center"}>
                             <span className={"text-zinc-400"}>Email</span>
-                            <span className={"text-[#05CDCD]"}>poorya.comsanjari@gmai,com</span>
+                            <span className={"text-[#05CDCD]"}>Support@btpool.net</span>
                         </div>
                         <div className={"flex justify-between text-sm items-center"}>
                             <span className={"text-zinc-400"}>Telegram</span>

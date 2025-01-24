@@ -8,33 +8,34 @@ import getUserFromCookie from "@/backend/tools/getUser";
 
 export default async function Home() {
 
-    let data = []
+
+    let data = [];
 
     try {
+        // Add more coins to the fsyms parameter
         const priceResponse = await axios.get(
-            'https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,LTC&tsyms=USD'
+            'https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,LTC,XRP,DOGE,ADA,BNB,SOL,DOT,SHIB,TRX,MATIC&tsyms=USD'
         );
 
         const prices = priceResponse.data;
 
-
         const miningResponse = await axios.get(
-            'https://min-api.cryptocompare.com/data/blockchain/mining/calculator?fsyms=BTC,ETH,LTC&tsyms=USD'
+            'https://min-api.cryptocompare.com/data/blockchain/mining/calculator?fsyms=BTC,ETH,LTC,XRP,DOGE,ADA,BNB,SOL,DOT,SHIB,TRX,MATIC&tsyms=USD'
         );
 
         const miningData = miningResponse.data.Data;
 
-
         const tableData = Object.keys(prices).map((coin) => {
             const price = prices[coin]?.USD || 'N/A';
-            return {...miningData[coin].CoinInfo, price}
+            const coinInfo = miningData[coin]?.CoinInfo || {}; // Handle missing CoinInfo
+            return {...coinInfo, price};
         });
-
-        data = tableData ?? []
-
+        console.log(tableData)
+        data = tableData ?? [];
     } catch (error) {
         console.error('Error fetching data:', error);
     }
+
 
 
 
@@ -66,17 +67,17 @@ export default async function Home() {
 
     const fitureCard = {
         one: {
-            image: "1.svg",
+            image: "1.png",
             content: "Real and transparent mining data, advanced FPPS revenue model, powerful settlement center, punctual payment, rain or shine",
             title: "Revenue Assurance"
         },
         two: {
-            image: "2.svg",
+            image: "2.png",
             content: "Concise app and webpage operation, easy account registration with cell-phone number or email, independent alarm function, revenue address, miners grouping and watcher link of sharing data.",
             title: "Convenient Management"
         },
         three: {
-            image: "3.svg",
+            image: "3.png",
             content: "Open source code, free management software of miners and mining farm, official customized overclock firmware increases revenue significantly, blockchain data and technical service provider.",
             title: "Leading Technology"
         },
@@ -88,7 +89,7 @@ export default async function Home() {
             title: "Convenient Managemen",
             image: "sec2-1",
             list: [
-                "egister with Mailbox",
+                "Register with Mailbox",
                 " Authorize shared",
                 " Have an sub-account",
                 " Convenient management"
@@ -197,10 +198,8 @@ export default async function Home() {
                       </div>
                       <div>
                           <p className={"text-[#79808A]"}>
-                              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi consectetur cupiditate
-                              fugit
-                              inventore molestias, natus quis quo recusandae tenetur? Culpa delectus harum illo ipsum
-                              maiores non officia praesentium, tempora voluptates.
+                              Longest running bitcoin mining pool since 2010. Offering Lightning payouts and predictable
+                              and consistent FPPs rewards which include the transaction fees.
                           </p>
 
                       </div>

@@ -84,7 +84,7 @@ export default function Page() {
     return (
         <div className={"z-40 relative"}>
             <div className={"w-full z-40  flex flex-col md:flex-row  gap-4"}>
-                <StatsCard childrenClassName={"px-0"} className={"w-full sticky top-28 left-0  md:w-3/12"}
+                <StatsCard childrenClassName={"px-0"} className={"w-full overflow-auto  top-28 left-0  md:w-3/12"}
                            title={"My Group"}>
                     <div className={"w-full z-40 flex flex-col"}>
                         {Object.entries(miners).map(([key, val]) => {
@@ -109,7 +109,7 @@ export default function Page() {
                 </StatsCard>
                 <StatsCard className={"md:w-9/12 w-full h-fit"} title={"Worker List"}>
                     <div>
-                        <div className={"mb-12 flex flex-col-reverse gap-4 md:flex-row justify-between"}>
+                        <div className={"mb-12 flex flex-col-reverse overflow-auto gap-4 md:flex-row justify-between"}>
                             <div className={"flex z-40 "}>
                                 {Object.entries(segmentButtons).map(([key, val]) => {
                                     let {label, value, count} = val;

@@ -3,6 +3,44 @@ import {CoinType} from "@/types/type";
 import Image from "next/image";
 
 const CoinTable = ({ coins } : {coins : any}) => {
+
+    const getRandomNumber = (min : number, max : number) => {
+        return (Math.random() * (max - min) + min).toFixed(2)
+    }
+
+
+    const dif = {
+
+        BTC : "110.45/T",
+        ETH : "354/G",
+        LTC : "64.62/M",
+        XRP : "236T/G",
+        DOGE : "320/K",
+        ADA  : "150/G",
+        BNB  : "239.52/G" ,
+        SOL  : "43.72/K",
+        DOT  : "12.77/G",
+        SHIB  : "22/M",
+        TRX  : "721.23/M",
+        MATIC  : "8.22/K"
+    }
+
+
+    const profit = {
+        BTC : "0.0600/T",
+        ETH : "354/G",
+        LTC : "2.4862/G",
+        XRP : "236T/G",
+        DOGE : "320/K",
+        ADA  : "150/G",
+        BNB  : "239.52/G" ,
+        SOL  : "43.72/K",
+        DOT  : "12.77/G",
+        SHIB  : "22/M",
+        TRX  : "721.23/M",
+        MATIC  : "8.22/K"
+    }
+
     return (
         <div className="overflow-x-auto ">
             <table className="min-w-full bg-white  text-gray-800 text-sm border-collapse border ">
@@ -37,8 +75,8 @@ const CoinTable = ({ coins } : {coins : any}) => {
                             Url ,
                             price
                         } = coin;
-                    console.log(coin)
-                    console.log(`/images/coin/${Name}.png`)
+
+
 
                         return (
                             <tr
@@ -53,12 +91,12 @@ const CoinTable = ({ coins } : {coins : any}) => {
                                         <span className="text-sm text hidden text-black">{"USD"}</span>
                                     </div>
                                 </td>
-                                <td className="p-4 text-black font-semibold  text-sm md:text-lg">{BlockReward}</td>
+                                <td className="p-4 text-black font-semibold  text-sm md:text-lg">$ {profit[Name as keyof typeof profit]}</td>
                                 <td className="p-4 text-black font-semibold  text-sm md:text-lg">{price}</td>
-                                <td className="p-4 text-black font-semibold  text-sm md:text-lg">{109.49}</td>
-                                <td className="p-4 text-black font-semibold  text-sm md:text-lg">{779.60}</td>
-                                <td className="p-4 text-black font-semibold  text-sm md:text-lg">{1190319}</td>
-                                <td className="p-4 text-black font-semibold  text-sm md:text-lg">{"110.45T"}</td>
+                                <td className="p-4 text-black font-semibold  text-sm md:text-lg">{Name === "BTC" ? getRandomNumber(104 , 105)  : getRandomNumber(1 , 600)}</td>
+                                <td className="p-4 text-black font-semibold  text-sm md:text-lg">{Name === "BTC" ? getRandomNumber(792 , 793)  : getRandomNumber(1 , 300)}</td>
+                                <td className="p-4 text-black font-semibold  text-sm md:text-lg">{Name === "BTC" ? getRandomNumber(1_180_000 , 1_190_000)  : getRandomNumber(1 , 270_000)}</td>
+                                <td className="p-4 text-black font-semibold  text-sm md:text-lg">{dif[Name as keyof typeof dif]}</td>
 
                             </tr>
                         )

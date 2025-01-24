@@ -22,7 +22,7 @@ export default function Header({user}: { user: User | null }) {
     const [popOver, setPopOver] = useState(false)
     const navLinks = [
         {label: "Pool", href: "pool"},
-        {label: "Assets", href: "assets"},
+        {label: "Assets", href: "wallet"},
         {label: "Blog", href: "blog"},
     ]
 
@@ -74,7 +74,7 @@ export default function Header({user}: { user: User | null }) {
 
     return (
         <header
-            className={`w-full fixed z-50 ${scrollY > 0 ? " bg-[#03060D]" : "bg-transparent"} top-0 transition py-6  `}>
+            className={`w-full fixed z-50 ${(scrollY > 0 || (pathname.includes("about") || pathname?.includes("terms"))) ? " bg-[#03060D]" : "bg-transparent"} top-0 transition py-6  `}>
             {showSideBard && (
                 <div className={"w-full flex flex-col justify-between  h-[100dvh] bg-[#03060D] fixed top-0 py-6 z-40"}>
                     <div className={"px-3 flex flex-col items-end gap-6 justify-end"}>

@@ -14,31 +14,35 @@ datasource db {
 }
 
 model User {
-  id             String   @id @unique @default(uuid())
+  id       String   @id @unique @default(uuid())
   /// username
-  username       String   @unique
+  username String   @unique
   /// passworl
-  password       String
+  password String
   /// name
-  name           String
+  name     String
   /// email
-  email          String   @unique
-  worker         Worker[]
-  profit         Profit[]
-  balance        Float?   @default(0)
-  total_earning  Float?   @default(0)
-  last_profit    Float?   @default(0)
-  hsashrate      Float?   @default(0)
-  daily_hashrate Float?   @default(0)
-  role           Roles    @default(USER)
-  hour_hashrate  Float?   @default(0)
+  email    String   @unique
+  worker   Worker[]
+  profit   Profit[]
+
+  btc_balace     Float? @default(0)
+  balance        Float? @default(0)
+  total_earning  Float? @default(0)
+  last_profit    Float? @default(0)
+  hsashrate      Float? @default(0)
+  daily_hashrate Float? @default(0)
+  role           Roles  @default(USER)
+  hour_hashrate  Float? @default(0)
+  bills          Bill[]
 }
 
 model Profit {
-  id               String   @unique @default(uuid())
-  created_at       DateTime @default(now())
-  hashrat          String
-  total_profit     Float
+  id           String   @unique @default(uuid())
+  created_at   DateTime @default(now())
+  hashrat      String
+  total_profit Float
+
   unit_output      Float
   coin_price       Float
   usd_total_profit Float
@@ -46,7 +50,7 @@ model Profit {
   pplns_profit     Float
   solo_profit      Float
   user_id          String
-  user             User     @relation(fields: [user_id], onDelete: Cascade, onUpdate: Cascade, references: [id])
+  user             User   @relation(fields: [user_id], onDelete: Cascade, onUpdate: Cascade, references: [id])
 }
 
 model Worker {
@@ -60,6 +64,25 @@ model Worker {
   user_id       String
   first_submit  DateTime
   user          User         @relation(fields: [user_id], onUpdate: Cascade, onDelete: Cascade, references: [id])
+}
+
+model MyAssets {
+  id              String   @unique @default(uuid())
+  created_at      DateTime
+  coin_type       String
+  account_balance Float
+  market_value    Float
+}
+
+model Bill {
+  id           String   @unique @default(uuid())
+  time         DateTime
+  coin_type    String
+  type         String
+  value_change Float
+  balance      Float
+  user_id      String
+  user         User     @relation(references: [id], fields: [user_id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 enum WorkerStatus {

@@ -7,7 +7,5 @@ export  async function GET(req: NextRequest) {
     // @ts-ignore
     const user: User & { worker: Worker[] } = await getUserFromCookie({worker: true})
 
-
-
     return response(user?.worker)
 }

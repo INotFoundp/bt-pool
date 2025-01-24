@@ -2,77 +2,18 @@
 
 import StatsCard from "@/components/cards/poolDahboard/StatsCard";
 import {Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
-import React, {useState} from "react";
-import {Input} from "@/components/ui/input";
+import React, {useEffect, useState} from "react";
+import useGetData from "@/hooks/useGetData";
+import {Profit, User} from "@prisma/client";
+import Loader from "@/components/theme/Loader";
 
 export default function Page() {
-    const [activeSeg, setActiveSeg] = useState("minute")
+    const [activeSeg, setActiveSeg] = useState("all")
 
-    const data = [
-        {
-            name: 'Page A',
-            uv: 4000,
-            pv: 2400,
-            amt: 2400,
-        },
-        {
-            name: 'Page B',
-            uv: 3000,
-            pv: 1398,
-            amt: 2210,
-        },
-        {
-            name: 'Page C',
-            uv: 2000,
-            pv: 9800,
-            amt: 2290,
-        },
-        {
-            name: 'Page D',
-            uv: 2780,
-            pv: 3908,
-            amt: 2000,
-        },
-        {
-            name: 'Page E',
-            uv: 1890,
-            pv: 4800,
-            amt: 2181,
-        },
-        {
-            name: 'Page F',
-            uv: 2390,
-            pv: 3800,
-            amt: 2500,
-        },
-        {
-            name: 'Page G',
-            uv: 3490,
-            pv: 4300,
-            amt: 2100,
-        }, {
-            name: 'Page G',
-            uv: 3490,
-            pv: 4300,
-            amt: 2100,
-        }, {
-            name: 'Page G',
-            uv: 3490,
-            pv: 4300,
-            amt: 2100,
-        }, {
-            name: 'Page G',
-            uv: null,
-            pv: null,
-            amt: 2100,
-        }, {
-            name: 'Page G',
-            uv: null,
-            pv: null,
-            amt: 2100,
-        },
-    ];
+    const [chartData, setChartData] = useState([{name: "to day", Hashrate: 0}])
+    const {data: user, loading} = useGetData<User>("/user/me")
 
+    const {data: profits, loadingProfit} = useGetData<Profit[]>("/user/pool/earnings")
 
     const segmentTableButtons = {
         all: {
@@ -98,35 +39,34 @@ export default function Page() {
             label: "Summary",
             value: "all"
         },
-        pps: {
-            label: "PPS",
-            value: "pps"
-        },
-        pplns: {
-            label: "PPLNS",
-            value: "pplns"
-        },
-        solo: {
-            label: "SOLO",
-            value: "solo"
-        },
+
     }
 
+    useEffect(() => {
+        if (!loading) {
+            if (user?.email === "reza.naderkhani42@gmail.com") {
+                fetch("/data/chart.json").then(r => r.json()).then((data: any[]) => {
 
-    const profits = [
-        {
-            date: new Date().toLocaleDateString(), // Format: "MM/DD/YYYY"
-            hashrate: "0 TH/s",
-            total_profit: "0 BTC",
-            unit_output: "0 BTC/TH/S",
-            coin_price: "0 USD",
-            total_profit_usd: "0 USD",
-            pps_profit: "0 ",
-            pplns_profit: "0 ",
-            solo_profit: "0 ",
+
+                    const datas = data?.map(item => {
+                        const newHashrate = Number(item.Hashrate?.slice?.(0, -1)) ?? 0
+                        console.log(newHashrate)
+
+                        return {...item, Hashrate: newHashrate}
+                    })
+
+                    console.log(datas)
+
+                    setChartData(datas as any)
+                })
+            }
         }
 
-    ]
+
+    }, [user, loading])
+
+
+    if (loading || loadingProfit) return <Loader/>
 
     return (
         <div className={"flex flex-col gap-8"}>
@@ -157,7 +97,7 @@ export default function Page() {
                             <AreaChart
                                 width={500}
                                 height={400}
-                                data={data}
+                                data={chartData ?? []}
                                 margin={{
                                     top: 10,
                                     right: 30,
@@ -166,11 +106,10 @@ export default function Page() {
                                 }}
 
                             >
-
-                                <XAxis dataKey="name"/>
+                                <XAxis dataKey="Date"/>
                                 <YAxis/>
                                 <Tooltip/>
-                                <Area type="monotone" dataKey="uv" stroke="" fill="#2980b9"/>
+                                <Area type="monotone" dataKey="Hashrate" stroke="" fill="#2980b9"/>
                             </AreaChart>
                         </ResponsiveContainer>
                     </div>
@@ -222,26 +161,24 @@ export default function Page() {
                                     </thead>
                                     <tbody>
 
-                                    {profits.map((profit) => {
+                                    {profits?.map?.((profit) => {
                                         let {
                                             coin_price,
-                                            date,
-                                            hashrate,
-                                            pplns_profit,
-                                            pps_profit,
-                                            solo_profit,
                                             total_profit,
-                                            total_profit_usd,
-                                            unit_output
+                                            usd_total_profit, solo_profit, psp_profit,
+                                            hashrat,
+                                            id,
+                                            unit_output, created_at,
+                                            pplns_profit
                                         } = profit;
                                         return (
                                             <tr className="z-40   text-white bg-[#282936]/50 last:border-0 border-b dark:border-gray-700">
                                                 <th scope="row"
                                                     className="px-6 py-4   dark:text-white">
-                                                    {date}
+                                                    {new Date(created_at).toLocaleDateString()}
                                                 </th>
                                                 <td className="px-6 py-4">
-                                                    {hashrate}
+                                                    {hashrat}
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     {total_profit}
@@ -253,10 +190,10 @@ export default function Page() {
                                                     {coin_price}
                                                 </td>
                                                 <td className="px-6  py-4">
-                                                    {total_profit_usd}
+                                                    {usd_total_profit}
                                                 </td>
                                                 <td className="px-6  text-[#05CDCD] py-4">
-                                                    {pps_profit}
+                                                    {psp_profit}
                                                 </td>
                                                 <td className="px-6 text-[#05CDCD] py-4">
                                                     {pplns_profit}

@@ -4,6 +4,7 @@ import {FaFacebook, FaTelegramPlane} from "react-icons/fa";
 // @ts-ignore
 import {BsTwitterX} from "react-icons/bs";
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -19,41 +20,30 @@ const Footer = () => {
             <FaFacebook size={21} color='#fff' />
             <FaTelegramPlane size={21} color='#fff' />
           </div>
-          <p className={'leading-[60px] text-white/60'}>Copyright © 2016 - 2025 ViaBTC</p>
+          <p className={'leading-[60px] text-white/60'}>Copyright © 2021 - 2025 BT-POOL</p>
         </div>
-        <div className={'hidden w-full md:w-7/12 flex-col gap-6 md:grid md:grid-cols-4 text-white/60'}>
-          <div>
-            <h4 className={'font-bold text-lg mb-2 text-white'}>Product</h4>
-            <ul>
-              <li>
-                <a href="#">BTPool Capital</a>
-              </li>
-            </ul>
-          </div>
+        <div className={'hidden w-full md:w-7/12 flex-col gap-6 md:grid md:grid-cols-3 text-white/60'}>
+
           <div>
             <h4 className={'font-bold text-lg mb-2 text-white'}>About</h4>
             <ul className={'flex flex-col gap-2'}>
-              <li><a href="#">About Us</a></li>
-              <li><a href="#">Terms of Service</a></li>
-              <li><a href="#">Privacy Policy</a></li>
-              <li><a href="#">BI Download</a></li>
+              <li><Link href="/about">About Us</Link></li>
+              <li><Link href="/terms">Terms of Service</Link></li>
             </ul>
           </div>
           <div>
-            <h4 className={'font-bold text-lg mb-2 text-white'}>Services</h4>
+            <h4 className={'font-bold text-lg mb-2 text-white'}>Assets</h4>
             <ul className={'flex flex-col gap-2'}>
-              <li><a href="#">Fees</a></li>
-              <li><a href="#">Referral Rewards</a></li>
-              <li><a href="#">BTPool Ambassador</a></li>
-              <li><a href="#">API</a></li>
+              <li><Link href="/wallet/summary">My Assets</Link></li>
+              <li><Link href="/wallet/bill">My Bills</Link></li>
             </ul>
           </div>
           <div>
-            <h4 className={'font-bold text-lg mb-2 text-white'}>Support</h4>
+            <h4 className={'font-bold text-lg mb-2 text-white'}>Pool</h4>
             <ul className={'flex flex-col gap-2'}>
-              <li><a href="#">Announcement Center</a></li>
-              <li><a href="#">Ticket</a></li>
-              <li><a href="#">Official Verification</a></li>
+              <li><Link href="/pool/stats">Stats</Link></li>
+              <li><Link href="/pool/worker">Worker</Link></li>
+              <li><Link href="/pool/earning">Earning</Link></li>
             </ul>
           </div>
         </div>
@@ -76,7 +66,6 @@ const Footer = () => {
                   <li><a href="#">About Us</a></li>
                   <li><a href="#">Terms of Service</a></li>
                   <li><a href="#">Privacy Policy</a></li>
-                  <li><a href="#">BI Download</a></li>
                 </ul>
               </AccordionContent>
             </AccordionItem>
