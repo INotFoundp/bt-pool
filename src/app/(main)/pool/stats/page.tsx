@@ -18,75 +18,7 @@ export default function Page() {
     const [activeSeg, setActiveSeg] = useState("minute")
 
 
-    const d = [
-        {
-            name: 'Page A',
-            uv: 4000,
-            pv: 2400,
-            amt: 2400,
-        },
-        {
-            name: 'Page B',
-            uv: 3000,
-            pv: 1398,
-            amt: 2210,
-        },
-        {
-            name: 'Page C',
-            uv: 2000,
-            pv: 9800,
-            amt: 2290,
-        },
-        {
-            name: 'Page D',
-            uv: 2780,
-            pv: 3908,
-            amt: 2000,
-        },
-        {
-            name: 'Page E',
-            uv: 1890,
-            pv: 4800,
-            amt: 2181,
-        },
-        {
-            name: 'Page F',
-            uv: 2390,
-            pv: 3800,
-            amt: 2500,
-        },
-        {
-            name: 'Page G',
-            uv: 3490,
-            pv: 4300,
-            amt: 2100,
-        }, {
-            name: 'Page G',
-            uv: 3490,
-            pv: 4300,
-            amt: 2100,
-        }, {
-            name: 'Page G',
-            uv: 3490,
-            pv: 4300,
-            amt: 2100,
-        }, {
-            name: 'Page G',
-            uv: null,
-            pv: null,
-            amt: 2100,
-        }, {
-            name: 'Page G',
-            uv: null,
-            pv: null,
-            amt: 2100,
-        }, {
-            name: 'Page G',
-            uv: null,
-            pv: null,
-            amt: 2100,
-        },
-    ];
+
 
     const renderActiveShape = (props : any) => {
         const RADIAN = Math.PI / 180;
@@ -140,14 +72,15 @@ export default function Page() {
                 fetch("/data/chart.json").then(r => r.json()).then((data: any[]) => {
 
 
-                    const datas = data?.map(item => {
+                    let datas = data.slice(0, 19)
+
+                     datas = data?.map(item => {
                         const newHashrate = Number(item.Hashrate?.slice?.(0, -1)) ?? 0
                         console.log(newHashrate)
 
                         return {...item, Hashrate: newHashrate}
                     })
 
-                    console.log(datas)
 
                     setChartData(datas as any)
                 })
@@ -207,6 +140,7 @@ export default function Page() {
             ]
         },
     }
+
 
     function filterAndGetLength(data: Worker[], key: Worker["status"]) {
         return data.filter(item => item.status === key).length ?? 0
@@ -289,7 +223,7 @@ export default function Page() {
                 })}
 
                 <StatsCard className={"w-full md:w-1/3"} title={"Worker"}>
-                    <div className={"w-full flex justify-between h-full"}>
+                    <div  className={"w-full flex justify-between h-full"}>
                         <ResponsiveContainer width=" 60%" height="100%">
                             <PieChart width={400} height={400}>
                                 <Pie
@@ -348,7 +282,7 @@ export default function Page() {
                 </StatsCard>
             </div>
             <div>
-                <StatsCard className={"w-full h-fit "} title={"Hashrate"} topButtonTitle={'Download File'}>
+                <StatsCard user={user} className={"w-full h-fit "} title={"Hashrate"} topButtonTitle={'Export Data'}>
 
 
                     <div className={"mb-12"}>

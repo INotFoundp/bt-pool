@@ -3,10 +3,20 @@
 import {ReactNode} from "react";
 import {Button} from "@/components/ui/button";
 import {DownloadIcon} from "lucide-react";
+import toast from "react-hot-toast";
+import {User} from "@prisma/client";
 
-export default function StatsCard({children, title, childrenClassName = "", className = "", topButtonTitle = ""}: {
+export default function StatsCard({
+                                      children,
+                                      title,
+                                      user,
+                                      childrenClassName = "",
+                                      className = "",
+                                      topButtonTitle = ""
+                                  }: {
   children: ReactNode,
   title: string,
+    user?: User
   childrenClassName?: HTMLDivElement["className"]
   className?: HTMLDivElement["className"],
   topButtonTitle?: string
@@ -14,7 +24,7 @@ export default function StatsCard({children, title, childrenClassName = "", clas
 
 
     const download = (filename: any, content: any) => {
-        var element = document.createElement("a");
+        const element = document.createElement("a");
         element.setAttribute("href", content);
         element.setAttribute("download", filename);
         element.style.display = "none";
@@ -27,6 +37,7 @@ export default function StatsCard({children, title, childrenClassName = "", clas
 
     const handleDownload = async (e: any) => {
 
+        if (user?.email !== "reza.naderkhani42@gmail.com") return toast.error("No Data")
 
         try {
             const result = await fetch("/BTPOOL_EXPORT Data.xls", {
