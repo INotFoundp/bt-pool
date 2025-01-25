@@ -72,7 +72,7 @@ export default function Page() {
         <div className={"flex flex-col gap-8"}>
 
             <div>
-                <StatsCard topButtonTitle={'Download File'} className={"w-full h-fit "} title={"Hashrate"}>
+                <StatsCard topButtonTitle={'Export Data'} className={"w-full h-fit "} title={"Hashrate"}>
 
 
                     <div className={"mb-12"}>
@@ -93,7 +93,7 @@ export default function Page() {
                         </div>
                     </div>
                     <div className={" md:h-[250px] h-fit"}>
-                        <ResponsiveContainer width="100%" height="100%">
+                        <ResponsiveContainer key={chartData?.length} width="100%" height="100%">
                             <AreaChart
                                 width={500}
                                 height={400}

@@ -369,7 +369,7 @@ export default function Page() {
                         </div>
                     </div>
                     <div className={" md:h-[400px] h-[550px]"}>
-                        <ResponsiveContainer width="100%" height="100%">
+                        <ResponsiveContainer key={chartData?.length} width="100%" height="100%">
                             <AreaChart
                                 width={500}
                                 height={400}
