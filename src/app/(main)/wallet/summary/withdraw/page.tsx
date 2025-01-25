@@ -14,7 +14,7 @@ export default function Page() {
     const {data: user, loading} = useGetData<User>("/user/me")
     const form: FormType[] = [
         {label: "Withdraw Address", key: "withdraw_address", type: "text"},
-        {label: "Aount", key: "amount", type: "number", extra: {amount: 0.00002}},
+        {label: "Amount", key: "amount", type: "number", extra: {amount: 0.00002}},
 
     ]
 
