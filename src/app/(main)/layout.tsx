@@ -4,7 +4,13 @@ import Footer from "@/components/theme/Footer";
 import getUserFromCookie from "@/backend/tools/getUser";
 import {Toaster} from "react-hot-toast";
 import React from "react";
+import {Metadata} from "next";
 
+
+export const metadata: Metadata = {
+    title: 'BT-POOL',
+
+}
 
 export default async function RootLayout({
   children,
@@ -15,6 +21,7 @@ export default async function RootLayout({
   const user = await getUserFromCookie()
 
   const data = JSON.parse(JSON.stringify(user))
+
 
   return (
     <html lang="en">
