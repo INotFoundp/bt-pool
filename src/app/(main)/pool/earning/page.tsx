@@ -117,7 +117,7 @@ export default function Page() {
                 </StatsCard>
 
             </div>
-            <div>
+            <div className={"h-[600px] overflow-auto"}>
                 <StatsCard className={" w-full h-fit"} title={"Profit Detail"}>
                     <div>
 
