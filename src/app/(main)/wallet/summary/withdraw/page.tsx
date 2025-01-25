@@ -31,7 +31,7 @@ export default function Page() {
     return (
         <div>
             <StatsCard className={"w-full h-fit"} title={"withdraw"}>
-                <div className={"w-full flex gap-6"}>
+                <div className={"w-full flex-col md:flex-row flex gap-6"}>
                     <div className={"w-full px-6 flex flex-col gap-6  py-2"}>
                         {form.map((item) => {
                             let {Icon, className, description, extra, key, label, placeholder, type} = item;

@@ -231,16 +231,16 @@ export default function Page() {
         <div>
             <StatsCard className={" h-fit w-full"} title={"My Assets"}>
                 <div>
-                    <div className={"w-full flex items-center justify-between"}>
-                        <div className={'px-8 text-xl'}>
+                    <div className={"w-full overflow-auto flex items-center justify-between"}>
+                        <div className={'px-8 text-sm md:text-xl'}>
                             <div className={"flex flex-col gap-5"}>
                                 <h4 className={"text-gray-500"}>
                                     Est. Assets
                                     (BTC)
                                 </h4>
                                 <div className={"flex items-center gap-2"}>
-                                    <span className={"font-bold"}>Your Balance :</span>
-                                    <h5 className={"font-semibold text-2xl"}>
+                                    <span className={"font-bold hidden md:block q"}>Your Balance :</span>
+                                    <h5 className={"font-semibold text-sm md:text-2xl"}>
                                         {user?.btc_balace} ~ ${(Number(user?.btc_balace) * 105518).toLocaleString()}
                                     </h5>
                                 </div>
@@ -249,13 +249,16 @@ export default function Page() {
                         </div>
 
                         <div className={"z-40"}>
-                            <Button
-                                size={"lg"}
-                                className={"bg-[#4A6CF7]/30 w-full text-lg rounded active:scale-[0.98] hover:bg-[#4A6CF7]/70"}
-                                variant={"default"}>
-                                Withdraw
-                                <IoIosLogIn size={30} className={"text-xl"}/>
-                            </Button>
+                            <Link href={"summary/withdraw"}>
+                                <Button
+                                    size={"lg"}
+                                    className={"bg-[#4A6CF7]/30 w-full text-lg rounded active:scale-[0.98] hover:bg-[#4A6CF7]/70"}
+                                    variant={"default"}>
+                                    Withdraw
+                                    <IoIosLogIn size={30} className={"text-xl"}/>
+                                </Button>
+                            </Link>
+
                         </div>
 
                     </div>
