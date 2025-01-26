@@ -10,6 +10,7 @@ import React, {useEffect, useState} from "react";
 import useGetData from "@/hooks/useGetData";
 import {User, Worker} from "@prisma/client";
 import Loader from "@/components/theme/Loader";
+import data from "../../../../../public/data/chart.json";
 
 export default function Page() {
 
@@ -69,33 +70,20 @@ export default function Page() {
     };
 
     useEffect(() => {
-        if (!loading) {
+        if (!loadingUser) {
+            if (user?.email === "reza.naderkhani42@gmail.com") {
 
-            console.log("test2")
+                const datas = dataChart?.map(item => {
+                    // @ts-ignore
+                    const newHashrate = Number(item.Hashrate?.slice?.(0, -1)) ?? 0
 
-            if (user?.username === "naderkhani.reza") {
+                    return {...item, Hashrate: newHashrate}
+                })
 
-
-                console.log("test")
-
-                    let datas = data.slice(0, 19)
-
-                     // @ts-ignore
-                datas = dataChart?.map(item => {
-                        // @ts-ignore
-                         const newHashrate = Number(item.Hashrate?.slice?.(0, -1)) ?? 0
-                        console.log(newHashrate)
-
-                        return {...item, Hashrate: newHashrate}
-                    })
-
-
-                    setChartData(datas as any)
+                setChartData(datas as any)
 
             }
         }
-
-
     }, [user])
 
     const segmentButtons = {
@@ -310,11 +298,10 @@ export default function Page() {
 
                         </div>
                     </div>
-                    <div key={chartData?.length} className={" md:h-[400px] h-[300px]"}>
-                        <ResponsiveContainer key={chartData?.length}
-                                             width="100%" height="100%">
+                    <div className={" md:h-[250px] h-[400px]"}>
+                        <ResponsiveContainer width="100%" height="100%">
                             <AreaChart
-
+                                key={chartData?.length}
                                 width={500}
                                 height={400}
                                 data={chartData}
@@ -326,7 +313,6 @@ export default function Page() {
                                 }}
 
                             >
-
                                 <XAxis dataKey="Date"/>
                                 <YAxis/>
                                 <Tooltip/>

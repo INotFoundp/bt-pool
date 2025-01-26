@@ -62,9 +62,6 @@ export default function Page() {
             }
         }
 
-
-
-
     }, [user])
 
     useEffect(() => {
