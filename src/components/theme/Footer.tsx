@@ -8,7 +8,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className='flex flex-row bg-[#282936] py-12 px-8 ms:px-0'>
+    <footer className='flex z-40 flex-row bg-[#282936] py-12 px-8 ms:px-0'>
       <div className="container flex flex-col md:flex-row mx-auto gap-2">
         <div className={'w-full md:w-5/12 flex flex-col'}>
 
@@ -48,7 +48,7 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-        <div className="w-full md:hidden text-white">
+        <div className="w-full z-40 md:hidden text-white">
           <Accordion type="single" collapsible>
 
             <AccordionItem value="item-2">

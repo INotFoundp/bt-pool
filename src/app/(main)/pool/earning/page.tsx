@@ -7,6 +7,9 @@ import useGetData from "@/hooks/useGetData";
 import {Profit, User} from "@prisma/client";
 import Loader from "@/components/theme/Loader";
 
+import data from "../../../../../public/data/chart.json"
+
+
 export default function Page() {
     const [activeSeg, setActiveSeg] = useState("all")
 
@@ -42,28 +45,31 @@ export default function Page() {
 
     }
 
+
     useEffect(() => {
         if (!loading) {
             if (user?.email === "reza.naderkhani42@gmail.com") {
-                fetch("/data/chart.json").then(r => r.json()).then((data: any[]) => {
-
 
                     const datas = data?.map(item => {
+                        // @ts-ignore
                         const newHashrate = Number(item.Hashrate?.slice?.(0, -1)) ?? 0
-                        console.log(newHashrate)
 
                         return {...item, Hashrate: newHashrate}
                     })
 
-                    console.log(datas)
-
                     setChartData(datas as any)
-                })
+
             }
         }
 
 
-    }, [user, loading])
+
+
+    }, [user])
+
+    useEffect(() => {
+        console.log(chartData)
+    }, [chartData]);
 
 
     if (loading || loadingProfit) return <Loader/>
@@ -81,7 +87,7 @@ export default function Page() {
                                 let {label, value} = val;
                                 const isActive = value == activeSeg
                                 return (
-                                    <span onClick={() => {
+                                    <span key={key} onClick={() => {
                                         setActiveSeg(value)
                                     }}
                                           className={` cursor-pointer transition py-2 ${isActive ? "border-[#05CDCD] text-[#05CDCD]  border-b-2" : ""} `}>
@@ -92,12 +98,13 @@ export default function Page() {
 
                         </div>
                     </div>
-                    <div className={" md:h-[250px] h-fit"}>
-                        <ResponsiveContainer key={chartData?.length} width="100%" height="100%">
+                    <div className={" md:h-[250px] h-[400px]"}>
+                        <ResponsiveContainer width="100%" height="100%">
                             <AreaChart
+                                key={chartData?.length}
                                 width={500}
                                 height={400}
-                                data={chartData ?? []}
+                                data={chartData}
                                 margin={{
                                     top: 10,
                                     right: 30,
@@ -172,7 +179,7 @@ export default function Page() {
                                             pplns_profit
                                         } = profit;
                                         return (
-                                            <tr className="z-40   text-white bg-[#282936]/50 last:border-0 border-b dark:border-gray-700">
+                                            <tr key={id} className="z-40   text-white bg-[#282936]/50 last:border-0 border-b dark:border-gray-700">
                                                 <th scope="row"
                                                     className="px-6 py-4   dark:text-white">
                                                     {new Date(created_at).toLocaleDateString()}

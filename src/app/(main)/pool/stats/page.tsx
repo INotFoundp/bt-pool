@@ -2,9 +2,11 @@
 
 import StatsCard from "@/components/cards/poolDahboard/StatsCard";
 
+import dataChart from "../../../../../public/data/chart.json"
+
+
 import {Area, AreaChart, Pie, PieChart, ResponsiveContainer, Sector, Tooltip, XAxis, YAxis} from "recharts";
 import React, {useEffect, useState} from "react";
-import Link from "next/link";
 import useGetData from "@/hooks/useGetData";
 import {User, Worker} from "@prisma/client";
 import Loader from "@/components/theme/Loader";
@@ -68,14 +70,20 @@ export default function Page() {
 
     useEffect(() => {
         if (!loading) {
-            if (user?.email === "reza.naderkhani42@gmail.com") {
-                fetch("/data/chart.json").then(r => r.json()).then((data: any[]) => {
 
+            console.log("test2")
+
+            if (user?.username === "naderkhani.reza") {
+
+
+                console.log("test")
 
                     let datas = data.slice(0, 19)
 
-                     datas = data?.map(item => {
-                        const newHashrate = Number(item.Hashrate?.slice?.(0, -1)) ?? 0
+                     // @ts-ignore
+                datas = dataChart?.map(item => {
+                        // @ts-ignore
+                         const newHashrate = Number(item.Hashrate?.slice?.(0, -1)) ?? 0
                         console.log(newHashrate)
 
                         return {...item, Hashrate: newHashrate}
@@ -83,12 +91,12 @@ export default function Page() {
 
 
                     setChartData(datas as any)
-                })
+
             }
         }
 
 
-    }, [user, loadingUser])
+    }, [user])
 
     const segmentButtons = {
         all: {
@@ -258,7 +266,7 @@ export default function Page() {
                             {Object.entries(workers).map(([key, value]) => {
                                 let {count, label, color} = value;
 
-                                console.log(color)
+
 
                                 return (
                                     <div className={"w-full flex items-center  "}>
@@ -302,9 +310,11 @@ export default function Page() {
 
                         </div>
                     </div>
-                    <div className={" md:h-[400px] h-[550px]"}>
-                        <ResponsiveContainer key={chartData?.length} width="100%" height="100%">
+                    <div key={chartData?.length} className={" md:h-[400px] h-[300px]"}>
+                        <ResponsiveContainer key={chartData?.length}
+                                             width="100%" height="100%">
                             <AreaChart
+
                                 width={500}
                                 height={400}
                                 data={chartData}
@@ -317,7 +327,7 @@ export default function Page() {
 
                             >
 
-                                <XAxis dataKey="name"/>
+                                <XAxis dataKey="Date"/>
                                 <YAxis/>
                                 <Tooltip/>
                                 <Area type="monotone" dataKey="Hashrate" stroke="" fill="#2980b9"/>

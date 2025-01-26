@@ -141,7 +141,7 @@ export default async function Page({
                                 <label className={"w-2/5"} htmlFor={key}>
                                     {label} :
                                 </label>
-                                <Input min={0} max={2} step={"0.0000000001"} required={true} placeholder={label}
+                                <Input  step={"0.0000000001"} required={true} placeholder={label}
                                        name={key} type={type}/>
                             </div>
                         )
@@ -151,7 +151,7 @@ export default async function Page({
                         <label className={"w-2/5"} htmlFor={"created_at"}>
                             {"created_at"} :
                         </label>
-                        <Input min={0} max={2} step={"0.0000000001"} required={true} placeholder={"date"}
+                        <Input step={"0.0000000001"} required={true} placeholder={"date"}
                                name={"created_at"}
                                type={"date"}/>
                     </div>
