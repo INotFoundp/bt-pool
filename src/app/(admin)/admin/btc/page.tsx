@@ -32,10 +32,10 @@ export default async function Page({
         "use server"
 
 
-        const values = Object?.fromEntries(formData) as { btc_balance: string , user : string }
+        const values = Object?.fromEntries(formData) as { btc_balance: string, ltc_balance: string, user: string }
 
 
-        const {btc_balance , user} = values
+        const {btc_balance, user, ltc_balance} = values
 
         try {
 
@@ -44,7 +44,8 @@ export default async function Page({
                     id : user
                 },
                 data : {
-                    btc_balace : +btc_balance
+                    btc_balace: +btc_balance,
+                    ltc_balance: +ltc_balance
                 }
             })
             revalidatePath("./")
@@ -90,6 +91,8 @@ export default async function Page({
 
                     <Input min={0} max={2} step={"0.0000000001"} required={true} placeholder={"btc_balance"}
                            name={"btc_balance"} type={"number"}/>
+                    <Input step={"0.0000000001"} required={true} placeholder={"ltc_balance"}
+                           name={"ltc_balance"} type={"number"}/>
 
                     <Button className={"w-24"}>
                         Submit
@@ -121,9 +124,18 @@ export default async function Page({
                         </form>
                     </div>
                     {!!sec_user ? (
-                        <div className="relative flex gap-8 overflow-x-auto">
-                            <span>value</span>
-                            <span>{sec_user?.btc_balace}</span>
+                        <div className="relative flex flex-col gap-8 overflow-x-auto">
+                            <div className={"flex gap-4"}>
+                                <span>BTC: </span>
+                                <span>{sec_user?.btc_balace}</span>
+                            </div>
+                            <div className={"flex gap-4"}>
+                                <span>LTC</span>
+                                <span>{sec_user?.ltc_balance}</span>
+                            </div>
+
+
+
                         </div>
                     ) : (
                         <div>

@@ -22,12 +22,23 @@ import {Input} from "@/components/ui/input";
 import useGetData from "@/hooks/useGetData";
 import Loader from "@/components/theme/Loader";
 import toast from "react-hot-toast";
+import {User, WalletAddress} from "@prisma/client";
 
 export default function Page() {
 
-    const {data: user, loading} = useGetData("/user/me")
+    const {data: user, loading} = useGetData<User>("/user/me")
+
+    const {data: walletData, loading: walletLoading} = useGetData<WalletAddress[]>("/user/wallet/address")
 
     const [wallet, setWallet] = useState("")
+
+
+    function filterWallets(name: string) {
+        return walletData?.find?.(o => o.name === name)
+    }
+
+    if (loading || walletLoading) return <Loader/>
+
 
     const coins = [
         {
@@ -44,7 +55,9 @@ export default function Page() {
             TotalCoinsMined: 19814384,
             AssetLaunchDate: '2009-01-03',
             MaxSupply: 20999999.9769,
-            price: 105119.27
+            price: 105119.27,
+            wallet: filterWallets("BTC")?.value ?? "",
+            user_balacne: user?.btc_balace
         },
         {
             Id: '7605',
@@ -60,7 +73,9 @@ export default function Page() {
             TotalCoinsMined: 120504823.311508,
             AssetLaunchDate: '2015-07-30',
             MaxSupply: -1,
-            price: 3382.03
+            price: 3382.03,
+            wallet: "",
+            user_balacne: 0
         },
         {
             Id: '3808',
@@ -76,7 +91,9 @@ export default function Page() {
             TotalCoinsMined: 75453683.2334713,
             AssetLaunchDate: '2011-10-08',
             MaxSupply: 84000000,
-            price: 117.29
+            price: 117.29,
+            wallet: filterWallets("LTC")?.value ?? "",
+            user_balacne: user?.ltc_balance
         },
         {
             Id: '5031',
@@ -92,7 +109,9 @@ export default function Page() {
             TotalCoinsMined: 99986637553,
             AssetLaunchDate: '2012-09-26',
             MaxSupply: 100000000000,
-            price: 3.168
+            price: 3.168,
+            wallet: "",
+            user_balacne: 0
         },
         {
             Id: '4432',
@@ -108,7 +127,9 @@ export default function Page() {
             TotalCoinsMined: 147753236383.705,
             AssetLaunchDate: '2013-12-08',
             MaxSupply: -1,
-            price: 0.3578
+            price: 0.3578,
+            wallet: "",
+            user_balacne: 0
         },
         {
             Id: '321992',
@@ -124,7 +145,9 @@ export default function Page() {
             TotalCoinsMined: 45000000000,
             AssetLaunchDate: '2017-09-23',
             MaxSupply: 45000000000,
-            price: 0.9977
+            price: 0.9977,
+            wallet: "",
+            user_balacne: 0
         },
         {
             Id: '204788',
@@ -140,7 +163,9 @@ export default function Page() {
             TotalCoinsMined: 142481096.07,
             AssetLaunchDate: '2019-04-18',
             MaxSupply: 100000000,
-            price: 686.87
+            price: 686.87,
+            wallet: "",
+            user_balacne: 0
         },
         {
             Id: '934443',
@@ -156,7 +181,9 @@ export default function Page() {
             TotalCoinsMined: 592651161.5973365,
             AssetLaunchDate: '2020-03-31',
             MaxSupply: -1,
-            price: 260.46
+            price: 260.46,
+            wallet: "",
+            user_balacne: 0
         },
         {
             Id: '935731',
@@ -172,7 +199,9 @@ export default function Page() {
             TotalCoinsMined: 1541629597.10267,
             AssetLaunchDate: '2020-05-26',
             MaxSupply: -1,
-            price: 6.419
+            price: 6.419,
+            wallet: "",
+            user_balacne: 0
         },
         {
             Id: '940776',
@@ -188,7 +217,9 @@ export default function Page() {
             TotalCoinsMined: 589606483736612,
             AssetLaunchDate: '2020-07-31',
             MaxSupply: -1,
-            price: 0.0000202
+            price: 0.0000202,
+            wallet: "",
+            user_balacne: 0
         },
         {
             Id: '310829',
@@ -204,7 +235,9 @@ export default function Page() {
             TotalCoinsMined: 86137640200.44958,
             AssetLaunchDate: '2018-06-25',
             MaxSupply: -1,
-            price: 0.2586
+            price: 0.2586,
+            wallet: "",
+            user_balacne: 0
         },
         {
             Id: '930246',
@@ -220,11 +253,12 @@ export default function Page() {
             TotalCoinsMined: 9971951068.27783,
             AssetLaunchDate: '2020-05-30',
             MaxSupply: -1,
-            price: 0.4392
+            price: 0.4392,
+            wallet: "",
+            user_balacne: 0
         }
     ]
 
-    if (loading) return <Loader/>
 
 
     return (
@@ -293,7 +327,7 @@ export default function Page() {
                                 </thead>
                                 <tbody>
                                 {coins.map(item => {
-                                    let {Name, price} = item;
+                                    let {Name, price, wallet, user_balacne} = item;
                                     return (
                                         <tr className="z-40   text-white bg-[#282936]/50 last:border-0 border-b dark:border-gray-700">
                                             <th scope="row"
@@ -303,10 +337,10 @@ export default function Page() {
                                                 <span className={"text-lg"}>{Name}</span>
                                             </th>
                                             <td className="px-6 text-lg py-4">
-                                                {Name === "BTC" ? user?.btc_balace : 0}
+                                                {user_balacne}
                                             </td>
                                             <td className="px-6 flex gap-4 items-center text-lg py-4">
-                                                {(Name === "BTC" && user?.email === "reza.naderkhani42@gmail.com") ? "bc1qkw7tdjkhec086wla4hk4k8yfg70e4cvaneeskn" : "Empty"}
+                                                {wallet.length ? wallet : "Empty"}
                                                 <Dialog>
                                                     <DialogTrigger asChild>
                                                         <CiEdit className={"text-xl cursor-pointer"}/>
@@ -324,7 +358,7 @@ export default function Page() {
                                                                 <label htmlFor="name" className="text-right">
                                                                     Wallet
                                                                 </label>
-                                                                <Input onChange={(e) => {
+                                                                <Input defaultValue={wallet} onChange={(e) => {
                                                                     setWallet(e.target.value)
                                                                 }} required={true} id="name"
                                                                        className="col-span-3"/>

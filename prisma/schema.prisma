@@ -26,15 +26,25 @@ model User {
   worker   Worker[]
   profit   Profit[]
 
-  btc_balace     Float? @default(0)
-  balance        Float? @default(0)
-  total_earning  Float? @default(0)
-  last_profit    Float? @default(0)
-  hsashrate      Float? @default(0)
-  daily_hashrate Float? @default(0)
-  role           Roles  @default(USER)
-  hour_hashrate  Float? @default(0)
+  btc_balace     Float?          @default(0)
+  ltc_balance    Float           @default(0)
+  balance        Float?          @default(0)
+  total_earning  Float?          @default(0)
+  last_profit    Float?          @default(0)
+  hsashrate      Float?          @default(0)
+  daily_hashrate Float?          @default(0)
+  role           Roles           @default(USER)
+  hour_hashrate  Float?          @default(0)
   bills          Bill[]
+  wallet_address WalletAddress[]
+}
+
+model WalletAddress {
+  id      String @unique @default(uuid())
+  name    String
+  value   String
+  user_id String
+  user    User   @relation(fields: [user_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
 }
 
 model Profit {
